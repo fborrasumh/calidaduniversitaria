@@ -6,16 +6,24 @@ Portal del curso «Calidad Universitaria con IA: potencia el servicio de calidad
 
 ## Contenido
 
-- **Tablón de procesos.** 18 procesos del servicio de calidad, tomados de [calidad.umh.es](https://calidad.umh.es/): SAIC (MP-01 a MP-24), encuestas, VII Plan de Calidad y Plan Director. Cada proceso indica la tarea manual que se repite, qué hace el código, qué hace la IA, quién firma, el potencial de automatización y qué apps lo cubren.
-- **Franja de fases.** Siete fases del ciclo de calidad: planificar, medir, escuchar, analizar y rendir cuentas, mejorar, evaluación externa, innovar y difundir.
-- **12 apps de sesión** (sesiones 2 a 5), todas nuevas:
-  - CuadrIA, EncuestIA y ComentarIA
-  - RevisIA, MejorIA y VisitIA
-  - BuzonIA, CartIA y NormIA
-  - EquipIA, ComparIA e InnovIA
+- **Tablón de procesos.** Son 22 procesos agrupados en los cuatro grandes procesos de un servicio de calidad, más un bloque transversal: voz del cliente, tratamiento de datos, acreditación/SAIC y gestión/mejora. Cada proceso indica sus tareas repetitivas, qué hace el código, qué hace la IA, quién firma, su potencial de automatización y qué apps lo cubren.
+- **8 apps de sesión,** dos por cada gran proceso:
+  - EncuestIA y VozIA
+  - CuadrIA e IncentivIA
+  - RevisIA y AcreditIA (esta ya existe)
+  - EquipIA e InnovIA
 - **1 app opcional:** ExcelencIA, para la autoevaluación EFQM 2025.
-- **16 apps complementarias** ya publicadas del catálogo [fborrasumh.github.io/ia](https://fborrasumh.github.io/ia/).
+- **15 apps complementarias** ya publicadas en el catálogo [fborrasumh.github.io/ia](https://fborrasumh.github.io/ia/).
+- **Kit común** que comparten todas las apps:
+  - perfil del servicio
+  - mapeo de columnas
+  - anonimizador
+  - verificador
+  - envío en ZIP de ficheros .eml
+  - intercambio de datos entre apps
 - **Curso** de 5 sesiones de 2 h, guía de la clave de IA y normas de uso.
+
+Gracias al perfil del servicio, las apps están pensadas para cualquier servicio de calidad universitario de España, Portugal y Latinoamérica.
 
 ## Publicar una app nueva
 

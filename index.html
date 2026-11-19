@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calidad Universitaria con IA · Potencia el servicio de calidad</title>
-<meta name="description" content="Curso «Calidad Universitaria con IA»: tablón de procesos del servicio de calidad, doce apps de IA en cinco sesiones, una app opcional de autoevaluación EFQM y dieciséis complementarias.">
+<meta name="description" content="Curso «Calidad Universitaria con IA»: tablón de procesos del servicio de calidad, ocho apps de IA en cinco sesiones, una app opcional de autoevaluación EFQM y quince complementarias, para cualquier universidad.">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -67,7 +67,7 @@ h2 { font-family: 'Sora', sans-serif; font-size: 1.5rem; font-weight: 800; lette
 .legend i.sw { width: 14px; height: 14px; border-radius: 4px; background: var(--c); display: inline-block; }
 .legend i.sw.comp { background: #fff; border: 1.5px dashed var(--comp); }
 .phases-wrap { width: min(1400px, calc(100vw - 32px)); position: relative; left: 50%; transform: translateX(-50%); overflow-x: auto; padding-bottom: 6px; }
-.phases { display: grid; grid-template-columns: repeat(7, minmax(170px, 1fr)); gap: 10px; min-width: 1300px; }
+.phases { display: grid; grid-template-columns: repeat(5, minmax(190px, 1fr)); gap: 10px; min-width: 1000px; }
 .phase { background: var(--surface); border: .5px solid var(--border); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
 .phase-h { display: flex; align-items: baseline; gap: 8px; padding-bottom: 8px; border-bottom: .5px solid var(--border); }
 .phase-n { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 1.15rem; color: var(--muted); }
@@ -145,6 +145,10 @@ table.board { border-collapse: collapse; width: 100%; min-width: 1080px; font-si
 .soon-dot { display: inline-block; width: 7px; height: 7px; border-radius: 99px; background: currentColor; opacity: .5; margin-left: 4px; vertical-align: middle; }
 .card .procs { font-size: 12px; color: var(--muted); }
 .card.optcard { border-top-color: var(--opt); }
+.pot.n { background: #f2f1ee; color: var(--muted); }
+.mini.kit { background: #f2f1ee; color: var(--text); border: 1px solid var(--border); }
+.card .exist { margin-left: auto; font-size: 11px; font-weight: 600; color: var(--muted); background: #f2f1ee; border-radius: 99px; padding: 2px 8px; }
+.card.kitcard { border-top-color: var(--text); }
 
 </style>
 </head>
@@ -156,10 +160,10 @@ table.board { border-collapse: collapse; width: 100%; min-width: 1080px; font-si
   <h1 data-i18n-html="h1"></h1>
   <p class="sub" data-i18n="sub"></p>
   <div class="stats">
-    <div><div class="stat-n">18</div><div class="stat-l" data-i18n="stProc"></div></div>
-    <div><div class="stat-n">12</div><div class="stat-l" data-i18n="stApps"></div></div>
+    <div><div class="stat-n">22</div><div class="stat-l" data-i18n="stProc"></div></div>
+    <div><div class="stat-n">8</div><div class="stat-l" data-i18n="stApps"></div></div>
     <div><div class="stat-n">1</div><div class="stat-l" data-i18n="stOpt"></div></div>
-    <div><div class="stat-n">16</div><div class="stat-l" data-i18n="stComp"></div></div>
+    <div><div class="stat-n">15</div><div class="stat-l" data-i18n="stComp"></div></div>
     <div><div class="stat-n">5</div><div class="stat-l" data-i18n="stSes"></div></div>
     <div><div class="stat-n">10 h</div><div class="stat-l" data-i18n="stHours"></div></div>
   </div>
@@ -169,6 +173,7 @@ table.board { border-collapse: collapse; width: 100%; min-width: 1080px; font-si
   <a href="#tablon" data-i18n="navBoard"></a>
   <a href="#fases" data-i18n="navPhases"></a>
   <a href="#apps" data-i18n="navApps"></a>
+  <a href="#kit" data-i18n="navKit"></a>
   <a href="#curso" data-i18n="navCourse"></a>
   <a href="#clave" data-i18n="navKey"></a>
   <a href="#normas" data-i18n="navRules"></a>
@@ -196,6 +201,12 @@ table.board { border-collapse: collapse; width: 100%; min-width: 1080px; font-si
     <p class="lead" data-i18n="appsLead"></p>
     <div id="groups"></div>
     <p class="shared" data-i18n="shared"></p>
+  </section>
+
+  <section id="kit">
+    <h2 data-i18n="kitH"></h2>
+    <p class="lead" data-i18n="kitLead"></p>
+    <div class="grid" id="kitGrid"></div>
   </section>
 
   <section id="curso">
@@ -259,13 +270,13 @@ table.board { border-collapse: collapse; width: 100%; min-width: 1080px; font-si
 
 <script>
 /* APPS DEL CURSO (ses 0 = opcional): cada ficha enlaza a https://fborrasumh.github.io/<id>/ cuando su id está en BUILT */
-const APPS = [{"id": "cuadria", "name": "CuadrIA", "ses": 2, "icon": "ti-gauge", "procs": [1, 4]}, {"id": "encuestia", "name": "EncuestIA", "ses": 2, "icon": "ti-chart-bar", "procs": [2]}, {"id": "comentaria", "name": "ComentarIA", "ses": 2, "icon": "ti-messages", "procs": [3]}, {"id": "revisia", "name": "RevisIA", "ses": 3, "icon": "ti-file-check", "procs": [5, 8]}, {"id": "mejoria", "name": "MejorIA", "ses": 3, "icon": "ti-refresh", "procs": [6]}, {"id": "visitia", "name": "VisitIA", "ses": 3, "icon": "ti-shield-check", "procs": [7, 9]}, {"id": "buzonia", "name": "BuzonIA", "ses": 4, "icon": "ti-mailbox", "procs": [10]}, {"id": "cartia", "name": "CartIA", "ses": 4, "icon": "ti-certificate", "procs": [11]}, {"id": "normia", "name": "NormIA", "ses": 4, "icon": "ti-book", "procs": [12]}, {"id": "equipia", "name": "EquipIA", "ses": 5, "icon": "ti-users-group", "procs": [13]}, {"id": "comparia", "name": "ComparIA", "ses": 5, "icon": "ti-arrows-diff", "procs": [14]}, {"id": "innovia", "name": "InnovIA", "ses": 5, "icon": "ti-bulb", "procs": [15]}, {"id": "excelencia", "name": "ExcelencIA", "ses": 0, "icon": "ti-award", "procs": [16]}];
-const BUILT = [];
+const APPS = [{"id": "encuestia", "name": "EncuestIA", "ses": 2, "icon": "ti-chart-bar", "procs": [1]}, {"id": "vozia", "name": "VozIA", "ses": 2, "icon": "ti-messages", "procs": [2, 3, 4]}, {"id": "cuadria", "name": "CuadrIA", "ses": 3, "icon": "ti-gauge", "procs": [5, 6]}, {"id": "incentivia", "name": "IncentivIA", "ses": 3, "icon": "ti-calculator", "procs": [7, 8]}, {"id": "revisia", "name": "RevisIA", "ses": 4, "icon": "ti-file-check", "procs": [9]}, {"id": "acreditia", "name": "AcreditIA", "ses": 4, "icon": "ti-shield-check", "procs": [10], "existing": true}, {"id": "equipia", "name": "EquipIA", "ses": 5, "icon": "ti-users-group", "procs": [13, 14]}, {"id": "innovia", "name": "InnovIA", "ses": 5, "icon": "ti-bulb", "procs": [14, 15, 16, 17]}, {"id": "excelencia", "name": "ExcelencIA", "ses": 0, "icon": "ti-award", "procs": [18]}];
+const BUILT = ["acreditia"];
 /* COMPLEMENTARIAS: apps ya publicadas del catálogo fborrasumh.github.io/ia */
-const COMP = {"acreditia": "AcreditIA", "acta_ai": "ActaAI", "cualitativia": "CualitativIA", "envolvente_dea": "Envolvente DEA", "envolvente_gestion": "Envolvente Gestión", "libretia": "LibretIA", "conversor_pdf_markdown": "Conversor PDF → Markdown", "concilia": "ConcilIA", "poliglotia": "PoliglotIA", "escenia": "EscenIA", "forja_ai": "ForjaIA", "claria": "ClarIA", "cuadernia": "CuadernIA", "autoresearch": "Autoresearch", "relatoria": "RelatorIA", "segundo_cerebro": "Segundo Cerebro"};
-const PHASES = [["cartia", "excelencia", "concilia"], ["cuadria", "encuestia", "envolvente_dea", "envolvente_gestion", "cuadernia"], ["comentaria", "buzonia", "cualitativia"], ["revisia", "libretia", "conversor_pdf_markdown", "autoresearch"], ["mejoria", "equipia", "comparia"], ["visitia", "normia", "acreditia", "segundo_cerebro"], ["innovia", "acta_ai", "relatoria", "escenia", "poliglotia", "claria", "forja_ai"]];
+const COMP = {"acta_ai": "ActaAI", "cualitativia": "CualitativIA", "envolvente_dea": "Envolvente DEA", "envolvente_gestion": "Envolvente Gestión", "libretia": "LibretIA", "conversor_pdf_markdown": "Conversor PDF → Markdown", "concilia": "ConcilIA", "poliglotia": "PoliglotIA", "escenia": "EscenIA", "forja_ai": "ForjaIA", "claria": "ClarIA", "cuadernia": "CuadernIA", "autoresearch": "Autoresearch", "relatoria": "RelatorIA", "segundo_cerebro": "Segundo Cerebro"};
+const PHASES = [["encuestia", "vozia", "cualitativia", "claria"], ["cuadria", "incentivia", "envolvente_dea", "envolvente_gestion", "cuadernia"], ["revisia", "acreditia", "acta_ai", "libretia", "conversor_pdf_markdown", "autoresearch"], ["equipia", "innovia", "excelencia", "relatoria", "escenia", "concilia"], ["segundo_cerebro", "poliglotia", "forja_ai"]];
 /* TABLÓN: [grupo, potencial h|m, apps] en el orden de T[lang].procs */
-const PROCS = [[0, "h", ["cuadria", "envolvente_dea", "envolvente_gestion"]], [0, "h", ["encuestia", "cuadernia"]], [0, "h", ["comentaria", "cualitativia"]], [0, "m", ["cuadria", "libretia"]], [1, "h", ["revisia", "autoresearch", "conversor_pdf_markdown"]], [1, "h", ["mejoria", "concilia"]], [1, "h", ["visitia", "acreditia"]], [1, "m", ["revisia", "claria"]], [1, "m", ["visitia", "acreditia"]], [2, "h", ["buzonia", "claria"]], [2, "h", ["cartia", "claria", "poliglotia", "autoresearch"]], [2, "h", ["normia", "segundo_cerebro", "conversor_pdf_markdown"]], [3, "h", ["equipia", "acta_ai", "concilia"]], [3, "m", ["comparia", "escenia"]], [3, "m", ["innovia", "forja_ai", "escenia"]], [3, "m", ["excelencia", "concilia"]], [4, "m", ["acta_ai", "relatoria"]], [4, "m", ["poliglotia", "claria"]]];
+const PROCS = [[0, "h", ["encuestia", "cuadernia"]], [0, "h", ["vozia", "claria"]], [0, "m", ["vozia", "cualitativia"]], [0, "h", ["vozia", "claria", "poliglotia"]], [1, "h", ["cuadria", "envolvente_dea", "envolvente_gestion", "cuadernia"]], [1, "h", ["cuadria", "libretia", "escenia"]], [1, "h", ["incentivia"]], [1, "h", ["incentivia"]], [2, "h", ["revisia", "autoresearch", "conversor_pdf_markdown"]], [2, "m", ["acreditia"]], [2, "m", ["acta_ai", "relatoria"]], [2, "n", []], [3, "h", ["equipia", "acta_ai"]], [3, "m", ["equipia", "innovia"]], [3, "m", ["innovia", "forja_ai"]], [3, "m", ["innovia", "escenia"]], [3, "h", ["innovia", "escenia"]], [3, "m", ["excelencia", "concilia"]], [4, "h", ["KIT"]], [4, "m", ["KIT"]], [4, "m", ["poliglotia", "claria"]], [4, "m", ["segundo_cerebro", "libretia"]]];
 const SES_COLOR = { 1:"--text", 2:"--s2", 3:"--s3", 4:"--s4", 5:"--s5" };
 const LANGS = ["es","en","pt"];
 const T = {
@@ -273,7 +284,7 @@ const T = {
   "title": "Calidad Universitaria con IA · Potencia el servicio de calidad",
   "eyebrow": "Curso · Servicios de calidad universitaria",
   "h1": "Calidad Universitaria: potencia el <span>servicio de calidad</span> con IA",
-  "sub": "Doce apps web de un solo archivo, con tu propia clave de IA, para automatizar los procesos del servicio de calidad: medir, asegurar los títulos, escuchar al usuario, mejorar e innovar.",
+  "sub": "Ocho apps web de un solo archivo, con tu propia clave de IA, organizadas según los grandes procesos de un servicio de calidad universitario: voz del cliente, tratamiento de datos, acreditación/SAIC y gestión/mejora. Para cualquier universidad de España, Portugal y Latinoamérica.",
   "stApps": "apps",
   "stOpt": "opcional",
   "stComp": "complementarias",
@@ -287,10 +298,10 @@ const T = {
   "navKey": "Clave de IA",
   "navRules": "Normas de uso",
   "boardH": "Tablón de procesos",
-  "boardLead": "Los procesos del servicio de calidad, tal como los describe calidad.umh.es (SAIC, encuestas, Plan de Calidad y Plan Director), con la tarea manual que se repite, qué hace el código, qué hace la IA, quién firma y qué app lo automatiza.",
+  "boardLead": "Los grandes procesos del servicio de calidad tal como los organiza su dirección (voz del cliente, tratamiento de datos, acreditación/SAIC y gestión/mejora), con las tareas que se repiten, qué hace el código, qué hace la IA, quién firma y qué app lo automatiza.",
   "thNum": "#",
   "thProc": "Proceso",
-  "thTask": "Tarea manual que se repite",
+  "thTask": "Tareas que se repiten",
   "thCode": "El código",
   "thAI": "La IA",
   "thSign": "Firma",
@@ -298,176 +309,197 @@ const T = {
   "thApps": "Apps",
   "potHigh": "Alto",
   "potMed": "Medio",
-  "boardNote": "El potencial es una estimación por volumen y repetición: la web del servicio no publica horas ni volúmenes, así que conviene validarlo con el personal del servicio. Las apps trabajan con exportaciones (CSV, Excel, Word, PDF) y nunca se conectan a los sistemas de la universidad. La IA propone, el código comprueba y una persona firma.",
+  "boardNote": "El potencial es una estimación por volumen y repetición: conviene validarlo con el personal del servicio. Las apps trabajan con exportaciones (CSV, Excel, Word, PDF) y nunca se conectan a los sistemas de la universidad. La IA propone, el código comprueba y una persona firma; las cifras y el dinero los calcula siempre el código. La acreditación institucional queda fuera por ahora: el servicio la desplegará por otra vía.",
   "groups": [
-   "A · Medir",
-   "B · Asegurar los títulos (SAIC)",
-   "C · Escuchar al usuario",
-   "D · Mejorar e innovar",
+   "A · Voz del cliente",
+   "B · Tratamiento de datos",
+   "C · Acreditación / SAIC",
+   "D · Gestión / Mejora",
    "E · Transversal"
   ],
   "procs": [
    [
-    "Cuadro de mando, VII Plan de Calidad y Pacto por la Calidad",
-    "Cruzar exportaciones del SGQ (indicadores, tasas) por título, centro, departamento y unidad",
-    "Tendencias, semáforos frente a meta, alertas, cumplimiento de objetivos",
-    "Narrativa de cada indicador con cada cifra comprobada",
+    "Encuestas",
+    "Preparación de correos y envío, análisis de resultados, elaboración y envío de informes",
+    "Invitaciones personalizadas (.eml), tasas de respuesta, medias con IC, mínimo de respuestas, informes en lote",
+    "Resumen de cada informe y temas de los comentarios abiertos con citas comprobadas",
     "Servicio"
    ],
    [
-    "Encuestas (MP-20, 10 encuestas)",
-    "Informes por profesor, asignatura, título y servicio; tasas de respuesta; ranking",
-    "Medias con IC, aviso de n baja, ranking, informes en lote",
-    "Resumen de cada informe",
-    "Servicio"
-   ],
-   [
-    "Comentarios abiertos, clima PTGAS y grupos focales",
-    "Leer y codificar miles de comentarios a mano",
-    "Anonimización, recuento por tema, acuerdo IA-persona",
-    "Taxonomía de temas y clasificación, con citas literales comprobadas",
-    "Servicio"
-   ],
-   [
-    "Memoria de Calidad anual",
-    "Reunir datos de todos los programas",
-    "Tablas y series",
-    "Primer borrador",
-    "Dirección"
-   ],
-   [
-    "Informe de Revisión de Resultados (MP-18)",
-    "Cada título redacta su IRR y el servicio revisa cientos",
-    "Completitud, coherencia con los datos, cumplimiento del plan anterior",
-    "Borrador y lectura crítica",
-    "Comisión del título"
-   ],
-   [
-    "Planes de mejora de títulos y servicios (MP-19, pmservicios)",
-    "Acciones vagas y seguimiento del cumplimiento",
-    "Responsable, plazo, indicador y meta en cada acción; avisos",
-    "Reformula en formato SMART",
-    "Responsable"
-   ],
-   [
-    "Seguimiento y renovación de la acreditación (MP-23, MP-24)",
-    "Calendario de renovaciones, evidencias, visita, alegaciones",
-    "Plazos de 6, 7 u 8 años según créditos; matriz criterio × evidencia",
-    "Audiencias simuladas, borrador de alegaciones",
-    "Centro"
-   ],
-   [
-    "Información pública (MP-07)",
-    "Revisar la sección «Calidad del título» de cada web",
-    "Lista de comprobación de elementos obligatorios",
-    "Señala lo que falta o está desactualizado",
-    "Servicio"
-   ],
-   [
-    "Auditoría interna (MP-22) y SGQ-FP",
-    "Lista de comprobación y muestreo de evidencias",
-    "Muestreo y lista de comprobación",
-    "Borrador del informe",
-    "Auditor"
-   ],
-   [
-    "Quejas, sugerencias y felicitaciones (MP-21)",
-    "Clasificar, enrutar, responder, cumplir plazos, sacar tendencias",
-    "Plazos, enrutado por reglas, tendencias",
-    "Tipo, tema y borrador de respuesta",
+    "Buzón de quejas y sugerencias",
+    "Clasificar, enrutar, responder en plazo, informe de tendencias",
+    "Plazos, enrutado por reglas, recuentos",
+    "Tipo, tema y borrador de respuesta en el idioma de la entrada",
     "Unidad"
    ],
    [
-    "Cartas de Servicio",
-    "Redactar y revisar cartas; revisión cada 3 años",
-    "9 elementos mínimos, indicador por compromiso, vigencia",
+    "Focus group",
+    "Guion, transcripción, análisis e informe",
+    "Anonimización, recuento por tema",
+    "Codificación con citas literales comprobadas",
+    "Servicio"
+   ],
+   [
+    "Cartas de servicio",
+    "Revisión de cartas y seguimiento de sus compromisos",
+    "9 elementos mínimos, indicador con meta por compromiso, vigencia",
     "Lenguaje claro, compromisos medibles, traducción",
     "Gerencia"
    ],
    [
-    "Consultas sobre el SAIC y control documental (MP-14)",
-    "Responder las mismas dudas de los responsables SAIC",
-    "Versiones y huella de cada procedimiento",
-    "Respuesta con cita literal del MP o MC",
-    "Servicio"
+    "Indicadores y cuadros de mando",
+    "Cálculo de indicadores, elaboración de cuadros de mando",
+    "Fórmulas del perfil, tendencias, semáforos, alertas",
+    "Narrativa de cada indicador con cada cifra comprobada",
+    "Dirección"
    ],
    [
-    "Equipos de Mejora (RC01, RC02, RC03)",
-    "Revisar propuestas y reclamar actas finales",
-    "3 a 10 miembros y 2 unidades; acta en 1 año y requerimiento",
-    "Proceso actual y propuesto, coste-beneficio",
-    "Vicegerencia"
+    "Informes del Plan de Calidad, del Plan Director y de seguimiento",
+    "Elaboración de informes anuales y de seguimiento",
+    "Tablas y series desde el cuadro de mando",
+    "Primer borrador de cada informe",
+    "Dirección"
    ],
    [
-    "Benchmarking",
-    "Revisar solicitudes, informes y presentaciones",
-    "Paquete completo: formulario, aceptación, agenda",
-    "Guion de visita, informe, Pecha Kucha",
+    "Revisión de pactos (Pacto por la Calidad)",
+    "Revisar objetivos e indicadores antes de firmar y su cumplimiento al cierre",
+    "Estándar, fuente y periodicidad de cada indicador; cumplimiento por grupo EFQM",
+    "Señala objetivos ambiguos o no medibles",
     "Gerencia"
    ],
    [
-    "Semana de la Innovación y Equipos de Innovación",
-    "Evaluar propuestas y seguirlas hasta implantarlas",
-    "Rúbrica con nota calculada, trazabilidad por fases",
+    "Incentivos del Plan de Calidad y del Plan Director",
+    "Cálculo de incentivos y notificación a cada unidad",
+    "Todo el cálculo con las reglas del perfil, registrado paso a paso",
+    "Ninguna cifra: solo el texto de las notificaciones",
+    "Gerencia"
+   ],
+   [
+    "IRR, plan de mejora e informe de seguimiento (SAIC)",
+    "Elaboración en cada título y revisión en lote por el servicio",
+    "Completitud, coherencia con los datos, acciones con responsable, plazo e indicador",
+    "Borrador, acciones SMART, lectura crítica",
+    "Comisión del título"
+   ],
+   [
+    "Autoinforme del título (renovación de la acreditación)",
+    "Elaboración del autoinforme con sus evidencias",
+    "Evidencias por criterio de la agencia",
+    "Borrador del autoinforme",
+    "Centro"
+   ],
+   [
+    "Actas de órganos de calidad",
+    "Elaboración de actas de comisiones y consejos",
+    "—",
+    "Acta a partir de notas o grabación",
+    "Secretaría"
+   ],
+   [
+    "Acreditación institucional de centros",
+    "Proceso en definición en el servicio",
+    "—",
+    "—",
+    "—"
+   ],
+   [
+    "Equipos de mejora",
+    "Propuesta, seguimiento, análisis de resultados e informe final",
+    "Requisitos de la propuesta, plazos, coste-beneficio",
+    "Proceso actual y propuesto, informe final",
+    "Vicegerencia"
+   ],
+   [
+    "Equipos de innovación",
+    "Implantación de las ideas premiadas y su seguimiento",
+    "Fases y estado de cada proyecto",
+    "Informe de resultados",
+    "Vicegerencia"
+   ],
+   [
+    "Semana de la Innovación",
+    "Recepción y valoración de propuestas, seguimiento",
+    "Rúbrica con nota calculada, propuestas parecidas",
     "Ficha y valoración preliminar",
     "Comité"
    ],
    [
-    "Autoevaluación EFQM 2025 (Plan Director)",
+    "Benchmarking",
+    "Solicitudes, visitas e informes de resultados",
+    "Paquete de solicitud completo",
+    "Guion de visita, informe, Pecha Kucha",
+    "Gerencia"
+   ],
+   [
+    "Jornadas MIB (Mejora, Innovación y Benchmarking)",
+    "Informe para Gerencia e indicadores para el cuadro de mando del Plan Director",
+    "Recuento de equipos, acciones implantadas y mejoras aplicadas",
+    "Informe para Gerencia y programa de la jornada",
+    "Gerencia"
+   ],
+   [
+    "Autoevaluación EFQM 2025",
     "Reunir evidencias por criterio y puntuar",
     "Matriz subcriterio × evidencia, puntuación RADAR",
     "Puntos fuertes y áreas de mejora citando evidencias",
     "Equipo evaluador"
    ],
    [
-    "Actas de comités y formación de responsables",
-    "Redactar actas y materiales de las sesiones",
-    "—",
-    "Actas y documentos a partir de notas o grabación",
-    "Secretaría"
+    "Envío de correos e informes personalizados",
+    "Preparar y enviar un correo por destinatario con su adjunto",
+    "ZIP de ficheros .eml y CSV de control",
+    "Texto del correo según la plantilla",
+    "Servicio"
    ],
    [
-    "Web trilingüe y documentos en es/va/en",
-    "Traducir y adaptar textos",
+    "Perfil del servicio y adaptación a otra universidad",
+    "Configurar agencia, unidades, indicadores, reglas y plantillas",
+    "Perfil JSON que importan todas las apps",
+    "—",
+    "Servicio"
+   ],
+   [
+    "Traducción y lenguaje claro",
+    "Web y documentos en varios idiomas",
     "Glosario común",
     "Traducción y lenguaje claro",
     "Servicio"
+   ],
+   [
+    "Base de conocimiento del servicio",
+    "Responder dudas sobre procedimientos y criterios",
+    "Índice y versiones de los documentos",
+    "Respuestas con cita literal",
+    "Servicio"
    ]
   ],
-  "phasesH": "Las apps en cada fase del ciclo de calidad",
-  "phasesLead": "Las doce apps del curso, la app opcional y dieciséis apps complementarias del catálogo, ordenadas según la fase del ciclo de calidad en la que se usan.",
-  "phasesNote": "Las complementarias y la opcional no forman parte de las sesiones: sirven para ampliar cada fase por tu cuenta. Las apps marcadas «en construcción» se publicarán a lo largo del curso.",
+  "phasesH": "Las apps en cada gran proceso",
+  "phasesLead": "Las ocho apps del curso, la opcional y quince complementarias del catálogo, ordenadas según los cuatro grandes procesos del servicio de calidad.",
+  "phasesNote": "Las complementarias y la opcional no forman parte de las sesiones: sirven para ampliar cada proceso por tu cuenta. Las apps marcadas «en construcción» se publicarán a lo largo del curso.",
   "legSes": "Sesión",
   "legOpt": "Opcional",
   "legComp": "Complementaria",
   "tagComp": "+",
   "tagOpt": "Opc.",
   "phases": [
-   "Planificar",
-   "Medir",
-   "Escuchar",
-   "Analizar y rendir cuentas",
-   "Mejorar",
-   "Evaluación externa",
-   "Innovar y difundir"
+   "Voz del cliente",
+   "Tratamiento de datos",
+   "Acreditación / SAIC",
+   "Gestión / Mejora",
+   "Transversal"
   ],
   "short": {
-   "cuadria": "Cuadro de mando del VII Plan con semáforos y Memoria de Calidad",
-   "encuestia": "Informes de encuesta en lote, ranking y tasas de respuesta",
-   "comentaria": "Comentarios abiertos y grupos focales codificados con citas comprobadas",
-   "revisia": "Borrador del IRR y revisión en lote de los IRR de los títulos",
-   "mejoria": "Planes de mejora PDCA en formato SMART, con seguimiento",
-   "visitia": "Renovación de la acreditación, visita AVAP y auditoría interna",
-   "buzonia": "Quejas, sugerencias y felicitaciones: triaje, respuesta y plazos",
-   "cartia": "Cartas de Servicio con los 9 elementos y compromisos medibles",
-   "normia": "Asistente del SAIC con respuestas citadas de los MP y MC",
-   "equipia": "Equipos de Mejora de la RC01 a la RC03, con plazos",
-   "comparia": "Benchmarking de la solicitud a la Pecha Kucha",
-   "innovia": "Semana de la Innovación: de la propuesta a la implantación",
+   "encuestia": "Encuestas: invitaciones .eml, análisis e informes en lote",
+   "vozia": "Buzón, focus group y revisión de cartas de servicio",
+   "cuadria": "Indicadores, cuadros de mando e informes de los planes",
+   "incentivia": "Revisión de pactos y cálculo auditable de incentivos",
+   "revisia": "IRR, plan de mejora y seguimiento del título",
+   "acreditia": "Autoinforme del título para la renovación de la acreditación",
+   "equipia": "Equipos de mejora y de innovación, de la RC01 a la RC03",
+   "innovia": "Semana de la Innovación, benchmarking y Jornadas MIB",
    "excelencia": "Autoevaluación EFQM 2025 con puntuación RADAR",
-   "acreditia": "Autoinforme del título y plan de mejora con agentes",
-   "acta_ai": "Actas de reuniones a partir de notas o audio",
-   "cualitativia": "Transcripción privada de grupos focales y árbol de códigos",
+   "acta_ai": "Actas de órganos de calidad a partir de notas o audio",
+   "cualitativia": "Transcripción privada de focus group y árbol de códigos",
    "envolvente_dea": "Eficiencia relativa de unidades con DEA",
    "envolvente_gestion": "DEA para la eficiencia en gestión organizativa",
    "libretia": "Cuaderno con fuentes del servicio y citas verificadas",
@@ -482,7 +514,7 @@ const T = {
    "relatoria": "De la grabación de una sesión a un documento",
    "segundo_cerebro": "Base de conocimiento del servicio con búsqueda semántica"
   },
-  "appsH": "Las doce apps y la opcional",
+  "appsH": "Las ocho apps y la opcional",
   "appsLead": "Cada app funciona en el navegador, sin instalación ni servidor, con OpenAI, Google Gemini o Anthropic Claude. La IA propone, el código comprueba y una persona del servicio firma.",
   "checks": "Qué se comprueba",
   "open": "Abrir app",
@@ -491,90 +523,74 @@ const T = {
   "optional": "Opcional · Excelencia",
   "procLbl": "Procesos",
   "apps": {
-   "cuadria": {
-    "what": "Carga las exportaciones del SGQ (indicadores del VII Plan, tasas académicas) y las metas, y monta el cuadro de mando por título, centro, departamento o unidad, con el cumplimiento de los objetivos del Pacto por la Calidad y el primer borrador de la Memoria de Calidad.",
-    "chk": "Tendencias, semáforos y alertas los calcula el código; cada cifra que escribe la IA se cruza con la tabla y las que no casan se marcan."
-   },
    "encuestia": {
-    "what": "Genera en lote los informes de cualquiera de las diez encuestas (por profesor, asignatura, título o servicio), el ranking de titulaciones y el seguimiento de la campaña con los títulos rezagados.",
-    "chk": "Medias, IC 95 % y tasas de respuesta por código; por debajo del mínimo de respuestas no se informa, y el resumen solo cita cifras del propio informe."
+    "what": "Prepara la campaña de cualquier encuesta con un correo personalizado para cada destinatario (ZIP .eml), sigue la tasa de respuesta por unidad, analiza los resultados y genera en lote el informe de cada unidad, con los comentarios abiertos codificados por temas.",
+    "chk": "Medias, IC 95 % y tasas por código; por debajo del mínimo de respuestas del perfil no se informa; el resumen solo cita cifras del propio informe y las citas se verifican literalmente."
    },
-   "comentaria": {
-    "what": "Codifica los comentarios abiertos de las encuestas, la encuesta de clima PTGAS y las transcripciones de grupos focales: taxonomía de temas editable, tono y matriz tema × título.",
-    "chk": "Anonimización previa; cada cita de ejemplo se verifica literal contra el corpus y una muestra doble codificada mide el acuerdo entre IA y persona."
+   "vozia": {
+    "what": "Tres módulos con temas y unidades comunes: buzón de quejas, sugerencias y felicitaciones (clasificación, respuesta y plazo), focus group (guion, codificación e informe) y revisión de cartas de servicio cruzando sus compromisos con el buzón y las encuestas.",
+    "chk": "Plazos y enrutado por reglas; los 9 elementos de la carta y un indicador con meta por compromiso; una respuesta no puede prometer lo que no está en la carta de la unidad."
+   },
+   "cuadria": {
+    "what": "Calcula los indicadores con las fórmulas del perfil, monta los cuadros de mando por ámbito y redacta los informes del Plan de Calidad, del Plan Director y de seguimiento, incluyendo los indicadores de gestión que llegan de EquipIA e InnovIA.",
+    "chk": "Tendencias, semáforos y alertas por código; cada cifra que escribe la IA se cruza con la tabla y las que no casan se marcan."
+   },
+   "incentivia": {
+    "what": "Revisa los pactos de objetivos antes de firmarlos, calcula su cumplimiento al cierre con la fórmula del Pacto por la Calidad (indicador, grupo EFQM ponderado y total) y aplica las reglas de reparto de incentivos del Plan de Calidad y del Plan Director.",
+    "chk": "La IA no toca ninguna cifra: todo el cálculo lo hace el código con las reglas del perfil y queda registrado paso a paso para auditoría."
    },
    "revisia": {
-    "what": "Modo título: borrador del Informe de Revisión de Resultados a partir de los datos del ciclo. Modo servicio: revisión en lote de los IRR entregados y de la información pública de cada título.",
-    "chk": "Completitud por apartado del MP-18, coherencia de cada cifra con los datos y cumplimiento del plan anterior; lista de elementos obligatorios del MP-07."
+    "what": "Ciclo anual del título en un solo recorrido: IRR, plan de mejora en formato SMART e informe de seguimiento del plan anterior. En modo servicio, revisa en lote lo entregado por todos los títulos y devuelve un informe a cada uno.",
+    "chk": "Completitud según la plantilla del perfil, coherencia de cada cifra con los datos, y cada acción con objetivo, responsable, fechas, indicador y meta."
    },
-   "mejoria": {
-    "what": "Gestiona planes de mejora PDCA de títulos (MP-19) y de servicios (pmservicios): recoge las áreas de mejora del resto de apps, reformula acciones en formato SMART y sigue su cumplimiento y eficacia.",
-    "chk": "Cada acción debe tener objetivo, responsable, fechas, indicador y meta; avisos de inicio y vencimiento; la IA nunca cambia responsables ni fechas."
-   },
-   "visitia": {
-    "what": "Calendario de renovaciones de la acreditación, matriz de evidencias por criterio, simulación de las audiencias de la visita AVAP, borrador de alegaciones y lista de comprobación de auditoría interna y SGQ-FP.",
-    "chk": "Plazos de 6, 7 u 8 años según créditos con alertas; huecos de evidencia por criterio; cada alegación cita su evidencia."
-   },
-   "buzonia": {
-    "what": "Clasifica las quejas, sugerencias y felicitaciones, propone la unidad responsable, redacta la respuesta en el idioma de la entrada y saca el informe de tendencias.",
-    "chk": "Plazos y enrutado por reglas en código; la respuesta no puede prometer plazos ni acciones que no estén en los compromisos de la unidad."
-   },
-   "cartia": {
-    "what": "Redacta o revisa una Carta de Servicio en lenguaje claro, convierte compromisos genéricos en medibles, la traduce al valenciano y al inglés y avisa de su revisión trienal.",
-    "chk": "Los 9 elementos mínimos, al menos un indicador con meta por compromiso y la vigencia de 3 años, comprobados por código."
-   },
-   "normia": {
-    "what": "Asistente para responsables SAIC y comisiones sobre los procedimientos MP-01 a MP-24, los manuales MC-01 a MC-07 y la normativa, con control de versiones de cada documento.",
-    "chk": "Cada respuesta lleva cita literal, documento y apartado, verificados por código; sin cita responde «no consta en la documentación»."
+   "acreditia": {
+    "what": "App ya publicada del catálogo, que se usa tal como está para el autoinforme de renovación de la acreditación del título, cargando como evidencias los IRR y planes de mejora de RevisIA.",
+    "chk": "Cada afirmación del autoinforme se apoya en una evidencia cargada."
    },
    "equipia": {
-    "what": "Acompaña a un Equipo de Mejora de la propuesta RC01 al acta final RC03: proceso actual y propuesto, alternativas con ventajas e inconvenientes y coste-beneficio cuantificado.",
-    "chk": "De 3 a 10 miembros y al menos 2 unidades; plazo de 1 año para el acta con requerimiento automático; coste-beneficio calculado con las cifras del equipo."
-   },
-   "comparia": {
-    "what": "Prepara una acción de benchmarking: tipo, solicitud completa, guion de preguntas para la visita, informe de resultados con mejoras aplicables y Pecha Kucha de 20 diapositivas.",
-    "chk": "Paquete de solicitud completo y requisitos (2 personas por unidad, institución en España); el informe solo recoge lo que consta en las notas de la visita."
+    "what": "Acompaña a los equipos de mejora y de innovación de la propuesta (RC01) al informe final (RC03): proceso actual y propuesto, alternativas, coste-beneficio, seguimiento y envío de requerimientos.",
+    "chk": "Requisitos de la propuesta y plazos según el perfil (en la UMH, de 3 a 10 miembros, al menos 2 unidades y acta final en 1 año); coste-beneficio con las cifras del equipo."
    },
    "innovia": {
-    "what": "Gestiona la cartera de propuestas de la Semana de la Innovación: ficha normalizada, valoración con rúbrica, propuestas parecidas y seguimiento hasta la implantación, con el Ticketing como caso.",
-    "chk": "La nota la calcula el código con pesos editables; la valoración preliminar de la IA cita la propuesta y la decide el comité."
+    "what": "Gestiona la Semana de la Innovación, las acciones de benchmarking y las Jornadas MIB, y produce el informe para Gerencia con los indicadores del cuadro de mando del Plan Director: equipos, acciones innovadoras implantadas y mejoras aplicadas.",
+    "chk": "La nota de cada propuesta la calcula el código; los recuentos para el cuadro de mando salen de las fichas cargadas, y el informe solo recoge lo que consta en ellas."
    },
    "excelencia": {
-    "what": "Autoevaluación con el Modelo EFQM 2025 (7 criterios, 29 subcriterios) usando como evidencia las salidas del resto de apps: puntos fuertes, áreas de mejora y memoria de autoevaluación.",
+    "what": "Autoevaluación con el Modelo EFQM 2025 (7 criterios, 29 subcriterios) usando como evidencias las salidas del resto de apps, incluidas las hojas de cumplimiento del Pacto, que ya se agrupan por criterios EFQM.",
     "chk": "Matriz subcriterio × evidencia y puntuación RADAR con reglas en código; sin evidencia citada no hay puntuación, y la nota la firma el equipo evaluador."
    }
   },
-  "shared": "Cada participante trabaja con las exportaciones (anonimizadas) de su propia unidad o de un título, y las apps se encadenan: las áreas de mejora de RevisIA, ComentarIA, BuzonIA y ExcelencIA entran en MejorIA, y el autoinforme de AcreditIA alimenta VisitIA.",
+  "shared": "Cada participante trabaja con las exportaciones (anonimizadas) de su propia unidad o de un título, y las apps se encadenan: las áreas de mejora de EncuestIA, VozIA y ExcelencIA entran en RevisIA y EquipIA, y los indicadores de EquipIA e InnovIA alimentan el cuadro de mando de CuadrIA.",
   "courseH": "El curso",
-  "courseLead": "Cinco sesiones de 2 horas que siguen el ciclo de calidad. Desde la segunda sesión se trabajan tres apps sobre los datos de cada participante (unos 30 minutos por app) y se sale con un entregable real.",
+  "courseLead": "Cinco sesiones de 2 horas. Desde la segunda, cada sesión trabaja uno de los cuatro grandes procesos del servicio con sus dos apps (unos 45 minutos por app), sobre los datos de cada participante, y se sale con un entregable real.",
   "thSes": "Sesión",
   "thOut": "Entregable",
   "slides": "Ver la presentación",
   "sessions": [
    {
-    "t": "Proveedores, modelos y tu clave de IA",
-    "a": "Presentación, guía de la clave y tablón de procesos",
-    "o": "Clave configurada con límite de gasto, modelo elegido y ficha de la unidad: procesos que lleva, exportaciones disponibles y los tres procesos del tablón que más tiempo le cuestan."
+    "t": "Proveedores, modelos, tu clave y el perfil del servicio",
+    "a": "Presentación, guía de la clave y perfil del servicio",
+    "o": "Clave configurada con límite de gasto, modelo elegido y perfil del servicio creado: agencia, unidades, indicadores, plantillas y exportaciones disponibles."
    },
    {
-    "t": "Medir",
-    "a": "CuadrIA · EncuestIA · ComentarIA",
-    "o": "Cuadro de mando de una unidad o título, lote de informes de encuesta y mapa de temas de los comentarios abiertos."
+    "t": "Voz del cliente",
+    "a": "EncuestIA · VozIA",
+    "o": "Una campaña de encuesta preparada con sus informes en lote, y un lote del buzón respondido junto con una carta de servicio revisada."
    },
    {
-    "t": "Asegurar los títulos",
-    "a": "RevisIA · MejorIA · VisitIA",
-    "o": "IRR de prueba revisado, plan de mejora en formato SMART con su seguimiento y dosier de preparación de una visita."
+    "t": "Tratamiento de datos",
+    "a": "CuadrIA · IncentivIA",
+    "o": "El cuadro de mando de una unidad con su informe, y la hoja de cumplimiento de su pacto calculada y comprobada."
    },
    {
-    "t": "Escuchar y comprometerse",
-    "a": "BuzonIA · CartIA · NormIA",
-    "o": "Lote del buzón clasificado y respondido, una Carta de Servicio revisada y el asistente del SAIC probado con preguntas reales."
+    "t": "Acreditación / SAIC",
+    "a": "RevisIA · AcreditIA",
+    "o": "El IRR de un título con su plan de mejora y su informe de seguimiento, y el borrador del autoinforme de renovación."
    },
    {
-    "t": "Mejorar e innovar",
-    "a": "EquipIA · ComparIA · InnovIA",
-    "o": "Propuesta RC01 validada con su mapa de proceso, solicitud de benchmarking completa y una propuesta de innovación evaluada."
+    "t": "Gestión / Mejora",
+    "a": "EquipIA · InnovIA",
+    "o": "El informe final de un equipo de mejora y el informe de las Jornadas MIB para Gerencia, con sus indicadores para el cuadro de mando."
    }
   ],
   "keyH": "Tu clave de IA",
@@ -598,9 +614,9 @@ const T = {
   "rulesLead": "Se aplican en todas las sesiones y en todas las apps.",
   "privH": "Protección de datos",
   "priv": [
-   "Solo exportaciones anonimizadas: nunca nombres, DNI, NIA, correos ni teléfonos de estudiantes, PDI o PTGAS.",
-   "Los comentarios abiertos y las entradas del buzón se anonimizan antes de enviarlos: pueden identificar a personas aunque no lleven nombre.",
-   "Los resultados de encuesta por profesor son datos personales: trabaja con datos ficticios o agregados en el curso.",
+   "Solo exportaciones anonimizadas: nunca nombres, documentos de identidad, correos ni teléfonos de estudiantes o personal, salvo en el módulo de envío, que no sale del navegador.",
+   "Los comentarios abiertos y las entradas del buzón se anonimizan antes de enviarlos a la IA: pueden identificar a personas aunque no lleven nombre.",
+   "Los resultados de encuesta por profesor y los incentivos por unidad son datos sensibles: en el curso, trabaja con datos ficticios o agregados.",
    "Usa documentos que tengas derecho a usar; el texto oficial del Modelo EFQM tiene derechos de autor.",
    "Cada participante usa su propia clave, guardada solo en su navegador."
   ],
@@ -608,9 +624,9 @@ const T = {
   "eth": [
    "Revisa todo lo que propone la IA antes de usarlo: la responsabilidad es de quien firma.",
    "La IA no decide: ratifica la comisión, aprueba Gerencia o Vicegerencia y responde la unidad.",
-   "Ninguna cifra entra sin respaldo: las apps marcan las que no están en los datos.",
+   "Ninguna cifra entra sin respaldo, y los incentivos los calcula solo el código.",
    "Informa cuando un informe o una respuesta se ha preparado con ayuda de IA.",
-   "Las simulaciones (visita AVAP, puntuación EFQM) orientan, pero no predicen la evaluación real."
+   "Las simulaciones y puntuaciones (EFQM, valoración de propuestas) orientan, pero no sustituyen a la evaluación."
   ],
   "footOrg": "Curso «Calidad Universitaria con IA» · basado en los procesos publicados en calidad.umh.es",
   "footDev": "Desarrollo:",
@@ -633,13 +649,45 @@ const T = {
    "Procesa lotes completos y entrega documentos en Word, Excel y PDF.",
    "Por API los datos no se usan para entrenar por defecto, y la clave se guarda solo en tu navegador."
   ],
-  "vsNote": "Son complementarios: el chatbot va bien para explorar; las apps con clave, para producir entregables verificables en lote. La suscripción al chatbot no incluye el uso de la API, que se factura aparte."
+  "vsNote": "Son complementarios: el chatbot va bien para explorar; las apps con clave, para producir entregables verificables en lote. La suscripción al chatbot no incluye el uso de la API, que se factura aparte.",
+  "navKit": "Kit común",
+  "potNone": "Por definir",
+  "kitChip": "Kit común",
+  "existing": "Existente",
+  "kitH": "Kit común",
+  "kitLead": "Seis componentes que llevan todas las apps por igual. Son lo que permite que cualquier servicio de calidad, de cualquier universidad, use las mismas apps.",
+  "kit": [
+   [
+    "Perfil del servicio",
+    "Un fichero JSON, creado en la sesión 1, con la universidad, el país y el idioma, la agencia y sus criterios, las unidades y títulos, los indicadores con su meta, las reglas de reparto, las plantillas y el calendario."
+   ],
+   [
+    "Mapeo de columnas",
+    "Asocia las columnas de cualquier exportación (SGQ u otra plataforma) con los campos que espera cada app, y lo guarda en el perfil."
+   ],
+   [
+    "Anonimizador",
+    "Enmascara nombres, correos, documentos de identidad y teléfonos antes de enviar nada a la IA, con vista previa de lo que sale."
+   ],
+   [
+    "Verificador",
+    "Cruza cada cifra del texto con la tabla de origen y cada cita con su documento, y marca lo que no casa."
+   ],
+   [
+    "Envío",
+    "Un correo personalizado por destinatario, con su adjunto, en un ZIP de ficheros .eml listos para enviar y un CSV de control."
+   ],
+   [
+    "Intercambio entre apps",
+    "Ficheros JSON con formato común para las áreas de mejora y los indicadores de gestión que pasan de una app a otra."
+   ]
+  ]
  },
  "en": {
   "title": "University Quality with AI · Empower the quality office",
   "eyebrow": "Course · University quality offices",
   "h1": "University Quality: empower the <span>quality office</span> with AI",
-  "sub": "Twelve single-file web apps, with your own AI key, to automate the quality office's processes: measure, assure degree programmes, listen to users, improve and innovate.",
+  "sub": "Eight single-file web apps, with your own AI key, organised around the main processes of a university quality office: voice of the customer, data processing, accreditation/internal quality assurance and management/improvement. For any university in Spain, Portugal and Latin America.",
   "stApps": "apps",
   "stOpt": "optional",
   "stComp": "complementary",
@@ -653,10 +701,10 @@ const T = {
   "navKey": "AI key",
   "navRules": "Rules of use",
   "boardH": "Process board",
-  "boardLead": "The quality office's processes as described on calidad.umh.es (internal quality assurance system, surveys, Quality Plan and Master Plan), with the repetitive manual task, what the code does, what the AI does, who signs off and which app automates it.",
+  "boardLead": "The quality office's main processes as its management organises them (voice of the customer, data processing, accreditation/internal quality assurance and management/improvement), with the repetitive tasks, what the code does, what the AI does, who signs off and which app automates it.",
   "thNum": "#",
   "thProc": "Process",
-  "thTask": "Repetitive manual task",
+  "thTask": "Repetitive tasks",
   "thCode": "The code",
   "thAI": "The AI",
   "thSign": "Signs off",
@@ -664,175 +712,196 @@ const T = {
   "thApps": "Apps",
   "potHigh": "High",
   "potMed": "Medium",
-  "boardNote": "Potential is estimated from volume and repetition: the office's website does not publish hours or volumes, so it should be validated with the office's staff. The apps work with exports (CSV, Excel, Word, PDF) and never connect to university systems. The AI proposes, the code checks and a person signs off.",
+  "boardNote": "Potential is estimated from volume and repetition and should be validated with the office's staff. The apps work with exports (CSV, Excel, Word, PDF) and never connect to university systems. The AI proposes, the code checks and a person signs off; figures and money are always computed by code. Institutional accreditation is out of scope for now: the office will roll it out separately.",
   "groups": [
-   "A · Measure",
-   "B · Assure degree programmes",
-   "C · Listen to users",
-   "D · Improve and innovate",
+   "A · Voice of the customer",
+   "B · Data processing",
+   "C · Accreditation / internal QA",
+   "D · Management / improvement",
    "E · Cross-cutting"
   ],
   "procs": [
    [
-    "Scorecard, 7th Quality Plan and Quality Pact",
-    "Cross-reference quality-system exports (indicators, rates) by programme, faculty, department and unit",
-    "Trends, traffic lights against targets, alerts, objective attainment",
-    "Narrative for each indicator with every figure checked",
+    "Surveys",
+    "Preparing and sending emails, analysing results, writing and sending reports",
+    "Personalised invitations (.eml), response rates, means with CIs, minimum responses, batch reports",
+    "Summary of each report and themes from open comments with checked quotes",
     "Office"
    ],
    [
-    "Surveys (MP-20, 10 surveys)",
-    "Reports by lecturer, subject, programme and service; response rates; ranking",
-    "Means with CIs, low-n warnings, ranking, batch reports",
-    "Summary of each report",
-    "Office"
-   ],
-   [
-    "Open comments, staff climate and focus groups",
-    "Reading and coding thousands of comments by hand",
-    "Anonymisation, counts by theme, AI-human agreement",
-    "Theme taxonomy and coding, with verbatim quotes checked",
-    "Office"
-   ],
-   [
-    "Annual Quality Report",
-    "Gathering data from every programme",
-    "Tables and series",
-    "First draft",
-    "Director"
-   ],
-   [
-    "Results Review Report (MP-18)",
-    "Each programme writes its report and the office reviews hundreds",
-    "Completeness, consistency with the data, progress on the previous plan",
-    "Draft and critical reading",
-    "Programme committee"
-   ],
-   [
-    "Improvement plans for programmes and services (MP-19)",
-    "Vague actions and progress tracking",
-    "Owner, deadline, indicator and target for every action; reminders",
-    "Rewrites actions as SMART",
-    "Owner"
-   ],
-   [
-    "Monitoring and re-accreditation (MP-23, MP-24)",
-    "Renewal calendar, evidence, site visit, responses",
-    "6, 7 or 8-year deadlines by credits; criterion × evidence matrix",
-    "Simulated panel interviews, draft responses",
-    "Faculty"
-   ],
-   [
-    "Public information (MP-07)",
-    "Checking the quality section of every programme website",
-    "Checklist of required items",
-    "Flags missing or outdated items",
-    "Office"
-   ],
-   [
-    "Internal audit (MP-22) and lifelong-learning system",
-    "Checklist and evidence sampling",
-    "Sampling and checklist",
-    "Draft report",
-    "Auditor"
-   ],
-   [
-    "Complaints, suggestions and compliments (MP-21)",
-    "Classifying, routing, replying, meeting deadlines, spotting trends",
-    "Deadlines, rule-based routing, trends",
-    "Type, topic and draft reply",
+    "Complaints and suggestions box",
+    "Classifying, routing, replying on time, trend report",
+    "Deadlines, rule-based routing, counts",
+    "Type, topic and draft reply in the submission's language",
     "Unit"
    ],
    [
-    "Service Charters",
-    "Drafting and reviewing charters; review every 3 years",
-    "9 minimum elements, indicator per commitment, validity",
+    "Focus groups",
+    "Script, transcription, analysis and report",
+    "Anonymisation, counts by theme",
+    "Coding with verbatim quotes checked",
+    "Office"
+   ],
+   [
+    "Service charters",
+    "Reviewing charters and tracking their commitments",
+    "9 minimum elements, indicator with target per commitment, validity",
     "Plain language, measurable commitments, translation",
     "Management"
    ],
    [
-    "Quality-system queries and document control (MP-14)",
-    "Answering the same questions from programme quality managers",
-    "Versions and fingerprint of each procedure",
-    "Answer with a verbatim quote from the procedure or manual",
-    "Office"
+    "Indicators and scorecards",
+    "Computing indicators, building scorecards",
+    "Profile formulas, trends, traffic lights, alerts",
+    "Narrative for each indicator with every figure checked",
+    "Director"
    ],
    [
-    "Improvement Teams (RC01, RC02, RC03)",
-    "Reviewing proposals and chasing final reports",
-    "3 to 10 members and 2 units; report within 1 year and reminder",
-    "Current and proposed process, cost-benefit",
-    "Deputy management"
+    "Quality Plan, Master Plan and follow-up reports",
+    "Writing annual and follow-up reports",
+    "Tables and series from the scorecard",
+    "First draft of each report",
+    "Director"
    ],
    [
-    "Benchmarking",
-    "Reviewing requests, reports and presentations",
-    "Complete package: form, acceptance, agenda",
-    "Visit script, report, Pecha Kucha",
+    "Reviewing pacts (Quality Pact)",
+    "Reviewing objectives and indicators before signing, and attainment at year end",
+    "Standard, source and frequency for each indicator; attainment by EFQM group",
+    "Flags ambiguous or unmeasurable objectives",
     "Management"
    ],
    [
-    "Innovation Week and Innovation Teams",
-    "Assessing proposals and following them to implementation",
-    "Rubric with computed score, stage tracking",
+    "Quality Plan and Master Plan incentives",
+    "Computing incentives and notifying each unit",
+    "The whole calculation with the profile's rules, logged step by step",
+    "No figures: only the wording of notifications",
+    "Management"
+   ],
+   [
+    "Results review, improvement plan and follow-up report",
+    "Written by each programme and reviewed in batch by the office",
+    "Completeness, consistency with the data, actions with owner, deadline and indicator",
+    "Draft, SMART actions, critical reading",
+    "Programme committee"
+   ],
+   [
+    "Programme self-assessment (re-accreditation)",
+    "Writing the self-assessment with its evidence",
+    "Evidence for each agency criterion",
+    "Draft self-assessment",
+    "Faculty"
+   ],
+   [
+    "Minutes of quality bodies",
+    "Writing minutes of committees and councils",
+    "—",
+    "Minutes from notes or a recording",
+    "Secretary"
+   ],
+   [
+    "Institutional accreditation of faculties",
+    "Process being defined by the office",
+    "—",
+    "—",
+    "—"
+   ],
+   [
+    "Improvement Teams",
+    "Proposal, follow-up, analysis of results and final report",
+    "Proposal requirements, deadlines, cost-benefit",
+    "Current and proposed process, final report",
+    "Deputy management"
+   ],
+   [
+    "Innovation Teams",
+    "Implementing awarded ideas and tracking them",
+    "Stages and status of each project",
+    "Results report",
+    "Deputy management"
+   ],
+   [
+    "Innovation Week",
+    "Receiving and assessing proposals, follow-up",
+    "Rubric with computed score, similar proposals",
     "Proposal sheet and preliminary assessment",
     "Committee"
    ],
    [
-    "EFQM 2025 self-assessment (Master Plan)",
+    "Benchmarking",
+    "Requests, visits and results reports",
+    "Complete request package",
+    "Visit script, report, Pecha Kucha",
+    "Management"
+   ],
+   [
+    "MIB days (Improvement, Innovation and Benchmarking)",
+    "Report for management and indicators for the Master Plan scorecard",
+    "Counts of teams, actions implemented and improvements applied",
+    "Report for management and day programme",
+    "Management"
+   ],
+   [
+    "EFQM 2025 self-assessment",
     "Gathering evidence per criterion and scoring",
     "Sub-criterion × evidence matrix, RADAR scoring",
     "Strengths and areas for improvement citing evidence",
     "Assessment team"
    ],
    [
-    "Committee minutes and training for quality managers",
-    "Writing minutes and session materials",
-    "—",
-    "Minutes and documents from notes or recordings",
-    "Secretary"
+    "Personalised emails and reports",
+    "Preparing and sending one email per recipient with its attachment",
+    "ZIP of .eml files and a control CSV",
+    "Email text from the template",
+    "Office"
    ],
    [
-    "Trilingual website and documents (es/va/en)",
-    "Translating and adapting texts",
+    "Office profile and adaptation to another university",
+    "Setting agency, units, indicators, rules and templates",
+    "Profile JSON imported by every app",
+    "—",
+    "Office"
+   ],
+   [
+    "Translation and plain language",
+    "Website and documents in several languages",
     "Shared glossary",
     "Translation and plain language",
     "Office"
+   ],
+   [
+    "Office knowledge base",
+    "Answering questions on procedures and criteria",
+    "Index and document versions",
+    "Answers with verbatim quotes",
+    "Office"
    ]
   ],
-  "phasesH": "The apps at each stage of the quality cycle",
-  "phasesLead": "The twelve course apps, the optional app and sixteen complementary apps from the catalogue, arranged by the stage of the quality cycle in which they are used.",
-  "phasesNote": "The complementary and optional apps are not part of the sessions: use them to go further in each stage on your own. Apps marked “in progress” will be released during the course.",
+  "phasesH": "The apps in each main process",
+  "phasesLead": "The eight course apps, the optional one and fifteen complementary apps from the catalogue, arranged by the quality office's four main processes.",
+  "phasesNote": "The complementary and optional apps are not part of the sessions: use them to go further in each process on your own. Apps marked “in progress” will be released during the course.",
   "legSes": "Session",
   "legOpt": "Optional",
   "legComp": "Complementary",
   "tagComp": "+",
   "tagOpt": "Opt.",
   "phases": [
-   "Plan",
-   "Measure",
-   "Listen",
-   "Analyse and report",
-   "Improve",
-   "External evaluation",
-   "Innovate and share"
+   "Voice of the customer",
+   "Data processing",
+   "Accreditation / internal QA",
+   "Management / improvement",
+   "Cross-cutting"
   ],
   "short": {
-   "cuadria": "7th Quality Plan scorecard with traffic lights and Quality Report",
-   "encuestia": "Batch survey reports, ranking and response rates",
-   "comentaria": "Open comments and focus groups coded with checked quotes",
-   "revisia": "Draft results review and batch review of programme reports",
-   "mejoria": "PDCA improvement plans in SMART form, with tracking",
-   "visitia": "Re-accreditation, panel visit and internal audit",
-   "buzonia": "Complaints, suggestions and compliments: triage, replies, deadlines",
-   "cartia": "Service Charters with the 9 elements and measurable commitments",
-   "normia": "Quality-system assistant with cited answers from the procedures",
-   "equipia": "Improvement Teams from RC01 to RC03, with deadlines",
-   "comparia": "Benchmarking from request to Pecha Kucha",
-   "innovia": "Innovation Week: from proposal to implementation",
+   "encuestia": "Surveys: .eml invitations, analysis and batch reports",
+   "vozia": "Suggestion box, focus groups and service charter review",
+   "cuadria": "Indicators, scorecards and plan reports",
+   "incentivia": "Pact review and auditable incentive calculation",
+   "revisia": "Programme results review, improvement plan and follow-up",
+   "acreditia": "Programme self-assessment for re-accreditation",
+   "equipia": "Improvement and innovation teams, RC01 to RC03",
+   "innovia": "Innovation Week, benchmarking and MIB days",
    "excelencia": "EFQM 2025 self-assessment with RADAR scoring",
-   "acreditia": "Programme self-assessment and improvement plan with agents",
-   "acta_ai": "Meeting minutes from notes or audio",
+   "acta_ai": "Minutes of quality bodies from notes or audio",
    "cualitativia": "Private focus-group transcription and code tree",
    "envolvente_dea": "Relative efficiency of units with DEA",
    "envolvente_gestion": "DEA for organisational management efficiency",
@@ -848,7 +917,7 @@ const T = {
    "relatoria": "From a session recording to a document",
    "segundo_cerebro": "The office's knowledge base with semantic search"
   },
-  "appsH": "The twelve apps and the optional one",
+  "appsH": "The eight apps and the optional one",
   "appsLead": "Each app runs in the browser, with no installation or server, using OpenAI, Google Gemini or Anthropic Claude. The AI proposes, the code checks and a member of the office signs off.",
   "checks": "What is checked",
   "open": "Open app",
@@ -857,90 +926,74 @@ const T = {
   "optional": "Optional · Excellence",
   "procLbl": "Processes",
   "apps": {
-   "cuadria": {
-    "what": "Loads quality-system exports (7th Quality Plan indicators, academic rates) and targets, and builds the scorecard by programme, faculty, department or unit, with Quality Pact attainment and a first draft of the Quality Report.",
-    "chk": "Trends, traffic lights and alerts are computed by code; every figure the AI writes is matched against the table and mismatches are flagged."
-   },
    "encuestia": {
-    "what": "Batch-produces reports for any of the ten surveys (by lecturer, subject, programme or service), the programme ranking and campaign tracking with lagging programmes.",
-    "chk": "Means, 95% CIs and response rates by code; nothing is reported below the minimum number of responses, and the summary only cites figures from its own report."
+    "what": "Prepares any survey campaign with a personalised email for each recipient (ZIP of .eml), tracks response rates by unit, analyses results and batch-produces each unit's report, with open comments coded by theme.",
+    "chk": "Means, 95% CIs and rates by code; nothing is reported below the profile's minimum number of responses; the summary only cites figures from its own report and quotes are verified verbatim."
    },
-   "comentaria": {
-    "what": "Codes open survey comments, the staff climate survey and focus-group transcripts: editable theme taxonomy, tone and a theme × programme matrix.",
-    "chk": "Prior anonymisation; every example quote is verified verbatim against the corpus and a double-coded sample measures AI-human agreement."
+   "vozia": {
+    "what": "Three modules sharing themes and units: complaints, suggestions and compliments (classification, reply and deadline), focus groups (script, coding and report) and service charter review, matching commitments against the box and the surveys.",
+    "chk": "Rule-based deadlines and routing; the charter's 9 elements and one indicator with a target per commitment; a reply cannot promise what is not in the unit's charter."
+   },
+   "cuadria": {
+    "what": "Computes indicators with the profile's formulas, builds scorecards by scope and drafts the Quality Plan, Master Plan and follow-up reports, including management indicators coming from EquipIA and InnovIA.",
+    "chk": "Trends, traffic lights and alerts by code; every figure the AI writes is matched against the table and mismatches are flagged."
+   },
+   "incentivia": {
+    "what": "Reviews objective pacts before signing, computes their attainment at year end with the Quality Pact formula (indicator, weighted EFQM group and total) and applies the incentive allocation rules of the Quality Plan and the Master Plan.",
+    "chk": "The AI never touches a figure: the whole calculation is done by code with the profile's rules and logged step by step for audit."
    },
    "revisia": {
-    "what": "Programme mode: draft Results Review Report from the cycle's data. Office mode: batch review of submitted reports and of each programme's public information.",
-    "chk": "Completeness per MP-18 section, consistency of every figure with the data and progress on the previous plan; checklist of MP-07 required items."
+    "what": "The programme's annual cycle in one pass: results review, SMART improvement plan and follow-up of the previous plan. In office mode, it reviews every programme's submission in batch and returns a report to each.",
+    "chk": "Completeness against the profile's template, consistency of every figure with the data, and every action with an objective, owner, dates, indicator and target."
    },
-   "mejoria": {
-    "what": "Manages PDCA improvement plans for programmes (MP-19) and services: collects improvement areas from the other apps, rewrites actions as SMART and tracks progress and effectiveness.",
-    "chk": "Every action needs an objective, owner, dates, indicator and target; start and due reminders; the AI never changes owners or dates."
-   },
-   "visitia": {
-    "what": "Re-accreditation calendar, evidence matrix by criterion, simulated panel interviews for the agency visit, draft responses and an internal-audit checklist.",
-    "chk": "6, 7 or 8-year deadlines by credits with alerts; evidence gaps per criterion; each response cites its evidence."
-   },
-   "buzonia": {
-    "what": "Classifies complaints, suggestions and compliments, proposes the responsible unit, drafts the reply in the submission's language and produces the trend report.",
-    "chk": "Deadlines and rule-based routing in code; the reply cannot promise deadlines or actions that are not in the unit's commitments."
-   },
-   "cartia": {
-    "what": "Drafts or reviews a Service Charter in plain language, turns generic commitments into measurable ones, translates it into Valencian and English and flags its three-year review.",
-    "chk": "The 9 minimum elements, at least one indicator with a target per commitment and the 3-year validity, checked by code."
-   },
-   "normia": {
-    "what": "Assistant for programme quality managers and committees on procedures MP-01 to MP-24, manuals MC-01 to MC-07 and regulations, with version control for each document.",
-    "chk": "Every answer carries a verbatim quote, document and section, verified by code; without a quote it answers “not in the documentation”."
+   "acreditia": {
+    "what": "An app already published in the catalogue, used as it is for the programme's re-accreditation self-assessment, loading RevisIA's results reviews and improvement plans as evidence.",
+    "chk": "Every statement in the self-assessment rests on loaded evidence."
    },
    "equipia": {
-    "what": "Supports an Improvement Team from the RC01 proposal to the RC03 final report: current and proposed process, alternatives with pros and cons and quantified cost-benefit.",
-    "chk": "3 to 10 members and at least 2 units; 1-year deadline for the report with an automatic reminder; cost-benefit computed from the team's figures."
-   },
-   "comparia": {
-    "what": "Prepares a benchmarking action: type, complete request, visit question script, results report with applicable improvements and a 20-slide Pecha Kucha.",
-    "chk": "Complete request package and requirements (2 people per unit, institution in Spain); the report only includes what is in the visit notes."
+    "what": "Supports improvement and innovation teams from the proposal (RC01) to the final report (RC03): current and proposed process, alternatives, cost-benefit, follow-up and reminders.",
+    "chk": "Proposal requirements and deadlines from the profile (at UMH, 3 to 10 members, at least 2 units and a final report within 1 year); cost-benefit from the team's figures."
    },
    "innovia": {
-    "what": "Manages the Innovation Week proposal portfolio: standard proposal sheet, rubric assessment, similar proposals and tracking to implementation, with the Ticketing tool as the case.",
-    "chk": "The score is computed by code with editable weights; the AI's preliminary assessment cites the proposal and the committee decides."
+    "what": "Manages Innovation Week, benchmarking actions and the MIB days, and produces the report for management with the Master Plan scorecard indicators: teams, innovative actions implanted and improvements applied.",
+    "chk": "Each proposal's score is computed by code; scorecard counts come from the loaded records, and the report only includes what is in them."
    },
    "excelencia": {
-    "what": "Self-assessment with the EFQM Model 2025 (7 criteria, 29 sub-criteria) using the other apps' outputs as evidence: strengths, areas for improvement and the self-assessment report.",
+    "what": "Self-assessment with the EFQM Model 2025 (7 criteria, 29 sub-criteria) using the other apps' outputs as evidence, including the Quality Pact attainment sheets, which are already grouped by EFQM criteria.",
     "chk": "Sub-criterion × evidence matrix and RADAR scoring with rules in code; no cited evidence, no score, and the assessment team signs off the score."
    }
   },
-  "shared": "Each participant works with the (anonymised) exports of their own unit or a programme, and the apps chain together: improvement areas from RevisIA, ComentarIA, BuzonIA and ExcelencIA flow into MejorIA, and the AcreditIA self-assessment feeds VisitIA.",
+  "shared": "Each participant works with the (anonymised) exports of their own unit or a programme, and the apps chain together: improvement areas from EncuestIA, VozIA and ExcelencIA flow into RevisIA and EquipIA, and indicators from EquipIA and InnovIA feed the CuadrIA scorecard.",
   "courseH": "The course",
-  "courseLead": "Five 2-hour sessions that follow the quality cycle. From the second session on, three apps are used on each participant's data (about 30 minutes per app) and everyone leaves with a real deliverable.",
+  "courseLead": "Five 2-hour sessions. From the second on, each session covers one of the office's four main processes with its two apps (about 45 minutes per app), on each participant's data, and everyone leaves with a real deliverable.",
   "thSes": "Session",
   "thOut": "Deliverable",
   "slides": "View the slides",
   "sessions": [
    {
-    "t": "Providers, models and your AI key",
-    "a": "Presentation, key guide and process board",
-    "o": "Key set up with a spending limit, model chosen and a unit profile: its processes, available exports and the three board processes that cost it most time."
+    "t": "Providers, models, your key and the office profile",
+    "a": "Presentation, key guide and office profile",
+    "o": "Key set up with a spending limit, model chosen and office profile created: agency, units, indicators, templates and available exports."
    },
    {
-    "t": "Measure",
-    "a": "CuadrIA · EncuestIA · ComentarIA",
-    "o": "Scorecard for a unit or programme, a batch of survey reports and a theme map of open comments."
+    "t": "Voice of the customer",
+    "a": "EncuestIA · VozIA",
+    "o": "A survey campaign prepared with its batch reports, and an answered batch of submissions plus a reviewed service charter."
    },
    {
-    "t": "Assure degree programmes",
-    "a": "RevisIA · MejorIA · VisitIA",
-    "o": "A reviewed trial results report, a SMART improvement plan with tracking and a visit preparation dossier."
+    "t": "Data processing",
+    "a": "CuadrIA · IncentivIA",
+    "o": "A unit's scorecard with its report, and its pact attainment sheet computed and checked."
    },
    {
-    "t": "Listen and commit",
-    "a": "BuzonIA · CartIA · NormIA",
-    "o": "A classified and answered batch of submissions, a reviewed Service Charter and the quality-system assistant tested with real questions."
+    "t": "Accreditation / internal QA",
+    "a": "RevisIA · AcreditIA",
+    "o": "A programme's results review with its improvement plan and follow-up report, and a draft re-accreditation self-assessment."
    },
    {
-    "t": "Improve and innovate",
-    "a": "EquipIA · ComparIA · InnovIA",
-    "o": "A validated RC01 proposal with its process map, a complete benchmarking request and an assessed innovation proposal."
+    "t": "Management / improvement",
+    "a": "EquipIA · InnovIA",
+    "o": "An improvement team's final report and the MIB days report for management, with its scorecard indicators."
    }
   ],
   "keyH": "Your AI key",
@@ -964,9 +1017,9 @@ const T = {
   "rulesLead": "They apply in every session and every app.",
   "privH": "Data protection",
   "priv": [
-   "Anonymised exports only: never names, ID numbers, emails or phone numbers of students or staff.",
-   "Open comments and submissions are anonymised before sending: they can identify people even without a name.",
-   "Survey results by lecturer are personal data: use fictitious or aggregated data in the course.",
+   "Anonymised exports only: never names, ID numbers, emails or phone numbers of students or staff, except in the sending module, which never leaves the browser.",
+   "Open comments and submissions are anonymised before being sent to the AI: they can identify people even without a name.",
+   "Survey results by lecturer and incentives by unit are sensitive: use fictitious or aggregated data in the course.",
    "Use documents you are entitled to use; the official text of the EFQM Model is copyrighted.",
    "Each participant uses their own key, stored only in their browser."
   ],
@@ -974,9 +1027,9 @@ const T = {
   "eth": [
    "Review everything the AI proposes before using it: responsibility lies with whoever signs.",
    "The AI does not decide: the committee ratifies, management approves and the unit replies.",
-   "No figure goes in without support: the apps flag those not found in the data.",
+   "No figure goes in without support, and incentives are computed only by code.",
    "Say when a report or reply was prepared with AI assistance.",
-   "Simulations (agency visit, EFQM score) are guidance and do not predict the real evaluation."
+   "Simulations and scores (EFQM, proposal assessment) are guidance and do not replace evaluation."
   ],
   "footOrg": "Course “University Quality with AI” · based on the processes published at calidad.umh.es",
   "footDev": "Developed by",
@@ -999,13 +1052,45 @@ const T = {
    "Processes whole batches and delivers Word, Excel and PDF documents.",
    "Via the API, data is not used for training by default, and the key is stored only in your browser."
   ],
-  "vsNote": "They complement each other: the chatbot is good for exploring; the key-based apps for producing verifiable deliverables in batches. A chatbot subscription does not include API use, which is billed separately."
+  "vsNote": "They complement each other: the chatbot is good for exploring; the key-based apps for producing verifiable deliverables in batches. A chatbot subscription does not include API use, which is billed separately.",
+  "navKit": "Shared kit",
+  "potNone": "To be defined",
+  "kitChip": "Shared kit",
+  "existing": "Existing",
+  "kitH": "Shared kit",
+  "kitLead": "Six components that every app carries in the same way. They are what lets any quality office, at any university, use the same apps.",
+  "kit": [
+   [
+    "Office profile",
+    "A JSON file, created in session 1, with the university, country and language, the agency and its criteria, units and programmes, indicators with targets, allocation rules, templates and calendar."
+   ],
+   [
+    "Column mapping",
+    "Maps the columns of any export (the UMH quality system or another platform) to the fields each app expects, and saves it in the profile."
+   ],
+   [
+    "Anonymiser",
+    "Masks names, emails, ID numbers and phone numbers before anything is sent to the AI, with a preview of what goes out."
+   ],
+   [
+    "Checker",
+    "Matches every figure in the text against the source table and every quote against its document, and flags mismatches."
+   ],
+   [
+    "Sending",
+    "One personalised email per recipient, with its attachment, in a ZIP of ready-to-send .eml files plus a control CSV."
+   ],
+   [
+    "App-to-app exchange",
+    "JSON files in a shared format for the improvement areas and management indicators that pass from one app to another."
+   ]
+  ]
  },
  "pt": {
   "title": "Qualidade Universitária com IA · Potencia o serviço de qualidade",
   "eyebrow": "Curso · Serviços de qualidade universitária",
   "h1": "Qualidade Universitária: potencia o <span>serviço de qualidade</span> com IA",
-  "sub": "Doze apps web num único ficheiro, com a tua própria chave de IA, para automatizar os processos do serviço de qualidade: medir, assegurar os cursos, ouvir o utilizador, melhorar e inovar.",
+  "sub": "Oito apps web num único ficheiro, com a tua própria chave de IA, organizadas segundo os grandes processos de um serviço de qualidade universitário: voz do cliente, tratamento de dados, acreditação/garantia interna da qualidade e gestão/melhoria. Para qualquer universidade de Espanha, Portugal e América Latina.",
   "stApps": "apps",
   "stOpt": "opcional",
   "stComp": "complementares",
@@ -1019,10 +1104,10 @@ const T = {
   "navKey": "Chave de IA",
   "navRules": "Normas de uso",
   "boardH": "Quadro de processos",
-  "boardLead": "Os processos do serviço de qualidade, tal como os descreve calidad.umh.es (sistema interno de garantia da qualidade, inquéritos, Plano de Qualidade e Plano Diretor), com a tarefa manual repetitiva, o que faz o código, o que faz a IA, quem assina e que app o automatiza.",
+  "boardLead": "Os grandes processos do serviço de qualidade tal como a sua direção os organiza (voz do cliente, tratamento de dados, acreditação/garantia interna e gestão/melhoria), com as tarefas repetitivas, o que faz o código, o que faz a IA, quem assina e que app o automatiza.",
   "thNum": "#",
   "thProc": "Processo",
-  "thTask": "Tarefa manual repetitiva",
+  "thTask": "Tarefas repetitivas",
   "thCode": "O código",
   "thAI": "A IA",
   "thSign": "Assina",
@@ -1030,175 +1115,196 @@ const T = {
   "thApps": "Apps",
   "potHigh": "Alto",
   "potMed": "Médio",
-  "boardNote": "O potencial é uma estimativa por volume e repetição: o site do serviço não publica horas nem volumes, por isso convém validá-lo com o pessoal do serviço. As apps trabalham com exportações (CSV, Excel, Word, PDF) e nunca se ligam aos sistemas da universidade. A IA propõe, o código verifica e uma pessoa assina.",
+  "boardNote": "O potencial é uma estimativa por volume e repetição e convém validá-lo com o pessoal do serviço. As apps trabalham com exportações (CSV, Excel, Word, PDF) e nunca se ligam aos sistemas da universidade. A IA propõe, o código verifica e uma pessoa assina; os números e o dinheiro são sempre calculados pelo código. A acreditação institucional fica de fora por agora: o serviço vai implementá-la por outra via.",
   "groups": [
-   "A · Medir",
-   "B · Assegurar os cursos",
-   "C · Ouvir o utilizador",
-   "D · Melhorar e inovar",
+   "A · Voz do cliente",
+   "B · Tratamento de dados",
+   "C · Acreditação / garantia interna",
+   "D · Gestão / Melhoria",
    "E · Transversal"
   ],
   "procs": [
    [
-    "Painel de indicadores, VII Plano de Qualidade e Pacto pela Qualidade",
-    "Cruzar exportações do sistema (indicadores, taxas) por curso, centro, departamento e unidade",
-    "Tendências, semáforos face à meta, alertas, cumprimento de objetivos",
-    "Narrativa de cada indicador com cada número verificado",
+    "Inquéritos",
+    "Preparação e envio de emails, análise de resultados, elaboração e envio de relatórios",
+    "Convites personalizados (.eml), taxas de resposta, médias com IC, mínimo de respostas, relatórios em lote",
+    "Resumo de cada relatório e temas dos comentários abertos com citações verificadas",
     "Serviço"
    ],
    [
-    "Inquéritos (MP-20, 10 inquéritos)",
-    "Relatórios por docente, unidade curricular, curso e serviço; taxas de resposta; ranking",
-    "Médias com IC, aviso de n baixo, ranking, relatórios em lote",
-    "Resumo de cada relatório",
-    "Serviço"
-   ],
-   [
-    "Comentários abertos, clima do pessoal e grupos focais",
-    "Ler e codificar milhares de comentários à mão",
-    "Anonimização, contagem por tema, acordo IA-pessoa",
-    "Taxonomia de temas e codificação, com citações literais verificadas",
-    "Serviço"
-   ],
-   [
-    "Relatório anual de Qualidade",
-    "Reunir dados de todos os programas",
-    "Tabelas e séries",
-    "Primeiro rascunho",
-    "Direção"
-   ],
-   [
-    "Relatório de Revisão de Resultados (MP-18)",
-    "Cada curso redige o seu relatório e o serviço revê centenas",
-    "Completude, coerência com os dados, cumprimento do plano anterior",
-    "Rascunho e leitura crítica",
-    "Comissão do curso"
-   ],
-   [
-    "Planos de melhoria de cursos e serviços (MP-19)",
-    "Ações vagas e acompanhamento do cumprimento",
-    "Responsável, prazo, indicador e meta em cada ação; avisos",
-    "Reformula em formato SMART",
-    "Responsável"
-   ],
-   [
-    "Acompanhamento e renovação da acreditação (MP-23, MP-24)",
-    "Calendário de renovações, evidências, visita, alegações",
-    "Prazos de 6, 7 ou 8 anos conforme créditos; matriz critério × evidência",
-    "Audições simuladas, rascunho de alegações",
-    "Centro"
-   ],
-   [
-    "Informação pública (MP-07)",
-    "Rever a secção de qualidade do site de cada curso",
-    "Lista de verificação de elementos obrigatórios",
-    "Assinala o que falta ou está desatualizado",
-    "Serviço"
-   ],
-   [
-    "Auditoria interna (MP-22) e formação contínua",
-    "Lista de verificação e amostragem de evidências",
-    "Amostragem e lista de verificação",
-    "Rascunho do relatório",
-    "Auditor"
-   ],
-   [
-    "Reclamações, sugestões e elogios (MP-21)",
-    "Classificar, encaminhar, responder, cumprir prazos, ver tendências",
-    "Prazos, encaminhamento por regras, tendências",
-    "Tipo, tema e rascunho de resposta",
+    "Caixa de reclamações e sugestões",
+    "Classificar, encaminhar, responder no prazo, relatório de tendências",
+    "Prazos, encaminhamento por regras, contagens",
+    "Tipo, tema e rascunho de resposta na língua da entrada",
     "Unidade"
    ],
    [
-    "Cartas de Serviço",
-    "Redigir e rever cartas; revisão a cada 3 anos",
-    "9 elementos mínimos, indicador por compromisso, vigência",
+    "Grupos focais",
+    "Guião, transcrição, análise e relatório",
+    "Anonimização, contagem por tema",
+    "Codificação com citações literais verificadas",
+    "Serviço"
+   ],
+   [
+    "Cartas de serviço",
+    "Revisão das cartas e acompanhamento dos compromissos",
+    "9 elementos mínimos, indicador com meta por compromisso, vigência",
     "Linguagem clara, compromissos mensuráveis, tradução",
     "Gerência"
    ],
    [
-    "Consultas sobre o sistema e controlo documental (MP-14)",
-    "Responder às mesmas dúvidas dos responsáveis de qualidade",
-    "Versões e impressão digital de cada procedimento",
-    "Resposta com citação literal do procedimento ou manual",
-    "Serviço"
+    "Indicadores e painéis",
+    "Cálculo de indicadores, elaboração de painéis",
+    "Fórmulas do perfil, tendências, semáforos, alertas",
+    "Narrativa de cada indicador com cada número verificado",
+    "Direção"
    ],
    [
-    "Equipas de Melhoria (RC01, RC02, RC03)",
-    "Rever propostas e pedir as atas finais",
-    "3 a 10 membros e 2 unidades; ata em 1 ano e notificação",
-    "Processo atual e proposto, custo-benefício",
-    "Vice-gerência"
+    "Relatórios do Plano de Qualidade, do Plano Diretor e de acompanhamento",
+    "Elaboração de relatórios anuais e de acompanhamento",
+    "Tabelas e séries a partir do painel",
+    "Primeiro rascunho de cada relatório",
+    "Direção"
    ],
    [
-    "Benchmarking",
-    "Rever pedidos, relatórios e apresentações",
-    "Pacote completo: formulário, aceitação, agenda",
-    "Guião da visita, relatório, Pecha Kucha",
+    "Revisão de pactos (Pacto pela Qualidade)",
+    "Rever objetivos e indicadores antes de assinar e o seu cumprimento no fecho",
+    "Padrão, fonte e periodicidade de cada indicador; cumprimento por grupo EFQM",
+    "Assinala objetivos ambíguos ou não mensuráveis",
     "Gerência"
    ],
    [
-    "Semana da Inovação e Equipas de Inovação",
-    "Avaliar propostas e acompanhá-las até à implementação",
-    "Rubrica com nota calculada, rastreio por fases",
+    "Incentivos do Plano de Qualidade e do Plano Diretor",
+    "Cálculo de incentivos e notificação a cada unidade",
+    "Todo o cálculo com as regras do perfil, registado passo a passo",
+    "Nenhum número: apenas o texto das notificações",
+    "Gerência"
+   ],
+   [
+    "Relatório de resultados, plano de melhoria e acompanhamento",
+    "Elaborado por cada curso e revisto em lote pelo serviço",
+    "Completude, coerência com os dados, ações com responsável, prazo e indicador",
+    "Rascunho, ações SMART, leitura crítica",
+    "Comissão do curso"
+   ],
+   [
+    "Autoavaliação do curso (renovação da acreditação)",
+    "Elaboração da autoavaliação com as suas evidências",
+    "Evidências por critério da agência",
+    "Rascunho da autoavaliação",
+    "Centro"
+   ],
+   [
+    "Atas dos órgãos de qualidade",
+    "Elaboração de atas de comissões e conselhos",
+    "—",
+    "Ata a partir de notas ou gravação",
+    "Secretariado"
+   ],
+   [
+    "Acreditação institucional de centros",
+    "Processo em definição no serviço",
+    "—",
+    "—",
+    "—"
+   ],
+   [
+    "Equipas de Melhoria",
+    "Proposta, acompanhamento, análise de resultados e relatório final",
+    "Requisitos da proposta, prazos, custo-benefício",
+    "Processo atual e proposto, relatório final",
+    "Vice-gerência"
+   ],
+   [
+    "Equipas de Inovação",
+    "Implementação das ideias premiadas e acompanhamento",
+    "Fases e estado de cada projeto",
+    "Relatório de resultados",
+    "Vice-gerência"
+   ],
+   [
+    "Semana da Inovação",
+    "Receção e avaliação de propostas, acompanhamento",
+    "Rubrica com nota calculada, propostas semelhantes",
     "Ficha e avaliação preliminar",
     "Comité"
    ],
    [
-    "Autoavaliação EFQM 2025 (Plano Diretor)",
+    "Benchmarking",
+    "Pedidos, visitas e relatórios de resultados",
+    "Pacote de pedido completo",
+    "Guião da visita, relatório, Pecha Kucha",
+    "Gerência"
+   ],
+   [
+    "Jornadas MIB (Melhoria, Inovação e Benchmarking)",
+    "Relatório para a Gerência e indicadores para o painel do Plano Diretor",
+    "Contagem de equipas, ações implementadas e melhorias aplicadas",
+    "Relatório para a Gerência e programa da jornada",
+    "Gerência"
+   ],
+   [
+    "Autoavaliação EFQM 2025",
     "Reunir evidências por critério e pontuar",
     "Matriz subcritério × evidência, pontuação RADAR",
     "Pontos fortes e áreas de melhoria citando evidências",
     "Equipa avaliadora"
    ],
    [
-    "Atas de comissões e formação de responsáveis",
-    "Redigir atas e materiais das sessões",
-    "—",
-    "Atas e documentos a partir de notas ou gravação",
-    "Secretariado"
+    "Envio de emails e relatórios personalizados",
+    "Preparar e enviar um email por destinatário com o seu anexo",
+    "ZIP de ficheiros .eml e CSV de controlo",
+    "Texto do email segundo o modelo",
+    "Serviço"
    ],
    [
-    "Site trilingue e documentos (es/va/en)",
-    "Traduzir e adaptar textos",
+    "Perfil do serviço e adaptação a outra universidade",
+    "Configurar agência, unidades, indicadores, regras e modelos",
+    "Perfil JSON importado por todas as apps",
+    "—",
+    "Serviço"
+   ],
+   [
+    "Tradução e linguagem clara",
+    "Site e documentos em várias línguas",
     "Glossário comum",
     "Tradução e linguagem clara",
     "Serviço"
+   ],
+   [
+    "Base de conhecimento do serviço",
+    "Responder a dúvidas sobre procedimentos e critérios",
+    "Índice e versões dos documentos",
+    "Respostas com citação literal",
+    "Serviço"
    ]
   ],
-  "phasesH": "As apps em cada fase do ciclo de qualidade",
-  "phasesLead": "As doze apps do curso, a app opcional e dezasseis apps complementares do catálogo, ordenadas pela fase do ciclo de qualidade em que se usam.",
-  "phasesNote": "As complementares e a opcional não fazem parte das sessões: servem para aprofundar cada fase por conta própria. As apps marcadas «em construção» serão publicadas ao longo do curso.",
+  "phasesH": "As apps em cada grande processo",
+  "phasesLead": "As oito apps do curso, a opcional e quinze apps complementares do catálogo, ordenadas pelos quatro grandes processos do serviço de qualidade.",
+  "phasesNote": "As complementares e a opcional não fazem parte das sessões: servem para aprofundar cada processo por conta própria. As apps marcadas «em construção» serão publicadas ao longo do curso.",
   "legSes": "Sessão",
   "legOpt": "Opcional",
   "legComp": "Complementar",
   "tagComp": "+",
   "tagOpt": "Opc.",
   "phases": [
-   "Planear",
-   "Medir",
-   "Ouvir",
-   "Analisar e prestar contas",
-   "Melhorar",
-   "Avaliação externa",
-   "Inovar e divulgar"
+   "Voz do cliente",
+   "Tratamento de dados",
+   "Acreditação / garantia interna",
+   "Gestão / Melhoria",
+   "Transversal"
   ],
   "short": {
-   "cuadria": "Painel do VII Plano com semáforos e Relatório de Qualidade",
-   "encuestia": "Relatórios de inquéritos em lote, ranking e taxas de resposta",
-   "comentaria": "Comentários abertos e grupos focais codificados com citações verificadas",
-   "revisia": "Rascunho do relatório de resultados e revisão em lote",
-   "mejoria": "Planos de melhoria PDCA em formato SMART, com acompanhamento",
-   "visitia": "Renovação da acreditação, visita do painel e auditoria interna",
-   "buzonia": "Reclamações, sugestões e elogios: triagem, resposta e prazos",
-   "cartia": "Cartas de Serviço com os 9 elementos e compromissos mensuráveis",
-   "normia": "Assistente do sistema de qualidade com respostas citadas",
-   "equipia": "Equipas de Melhoria do RC01 ao RC03, com prazos",
-   "comparia": "Benchmarking do pedido à Pecha Kucha",
-   "innovia": "Semana da Inovação: da proposta à implementação",
+   "encuestia": "Inquéritos: convites .eml, análise e relatórios em lote",
+   "vozia": "Caixa de sugestões, grupos focais e revisão de cartas de serviço",
+   "cuadria": "Indicadores, painéis e relatórios dos planos",
+   "incentivia": "Revisão de pactos e cálculo auditável de incentivos",
+   "revisia": "Relatório de resultados, plano de melhoria e acompanhamento",
+   "acreditia": "Autoavaliação do curso para a renovação da acreditação",
+   "equipia": "Equipas de melhoria e de inovação, do RC01 ao RC03",
+   "innovia": "Semana da Inovação, benchmarking e Jornadas MIB",
    "excelencia": "Autoavaliação EFQM 2025 com pontuação RADAR",
-   "acreditia": "Autoavaliação do curso e plano de melhoria com agentes",
-   "acta_ai": "Atas de reuniões a partir de notas ou áudio",
+   "acta_ai": "Atas dos órgãos de qualidade a partir de notas ou áudio",
    "cualitativia": "Transcrição privada de grupos focais e árvore de códigos",
    "envolvente_dea": "Eficiência relativa de unidades com DEA",
    "envolvente_gestion": "DEA para a eficiência na gestão organizacional",
@@ -1214,7 +1320,7 @@ const T = {
    "relatoria": "Da gravação de uma sessão a um documento",
    "segundo_cerebro": "Base de conhecimento do serviço com pesquisa semântica"
   },
-  "appsH": "As doze apps e a opcional",
+  "appsH": "As oito apps e a opcional",
   "appsLead": "Cada app funciona no navegador, sem instalação nem servidor, com OpenAI, Google Gemini ou Anthropic Claude. A IA propõe, o código verifica e uma pessoa do serviço assina.",
   "checks": "O que se verifica",
   "open": "Abrir app",
@@ -1223,90 +1329,74 @@ const T = {
   "optional": "Opcional · Excelência",
   "procLbl": "Processos",
   "apps": {
-   "cuadria": {
-    "what": "Carrega as exportações do sistema (indicadores do VII Plano, taxas académicas) e as metas, e monta o painel por curso, centro, departamento ou unidade, com o cumprimento do Pacto pela Qualidade e o primeiro rascunho do Relatório de Qualidade.",
-    "chk": "Tendências, semáforos e alertas são calculados pelo código; cada número escrito pela IA é cruzado com a tabela e os que não coincidem ficam assinalados."
-   },
    "encuestia": {
-    "what": "Gera em lote os relatórios de qualquer dos dez inquéritos (por docente, unidade curricular, curso ou serviço), o ranking de cursos e o acompanhamento da campanha com os cursos atrasados.",
-    "chk": "Médias, IC 95 % e taxas de resposta por código; abaixo do mínimo de respostas não se reporta, e o resumo só cita números do próprio relatório."
+    "what": "Prepara a campanha de qualquer inquérito com um email personalizado para cada destinatário (ZIP de .eml), acompanha a taxa de resposta por unidade, analisa os resultados e gera em lote o relatório de cada unidade, com os comentários abertos codificados por temas.",
+    "chk": "Médias, IC 95 % e taxas por código; abaixo do mínimo de respostas do perfil não se reporta; o resumo só cita números do próprio relatório e as citações são verificadas literalmente."
    },
-   "comentaria": {
-    "what": "Codifica os comentários abertos dos inquéritos, o inquérito de clima do pessoal e as transcrições de grupos focais: taxonomia de temas editável, tom e matriz tema × curso.",
-    "chk": "Anonimização prévia; cada citação de exemplo é verificada literalmente contra o corpus e uma amostra codificada duas vezes mede o acordo entre IA e pessoa."
+   "vozia": {
+    "what": "Três módulos com temas e unidades comuns: reclamações, sugestões e elogios (classificação, resposta e prazo), grupos focais (guião, codificação e relatório) e revisão de cartas de serviço, cruzando os compromissos com a caixa e os inquéritos.",
+    "chk": "Prazos e encaminhamento por regras; os 9 elementos da carta e um indicador com meta por compromisso; uma resposta não pode prometer o que não está na carta da unidade."
+   },
+   "cuadria": {
+    "what": "Calcula os indicadores com as fórmulas do perfil, monta os painéis por âmbito e redige os relatórios do Plano de Qualidade, do Plano Diretor e de acompanhamento, incluindo os indicadores de gestão que chegam do EquipIA e InnovIA.",
+    "chk": "Tendências, semáforos e alertas por código; cada número escrito pela IA é cruzado com a tabela e os que não coincidem ficam assinalados."
+   },
+   "incentivia": {
+    "what": "Revê os pactos de objetivos antes de assinar, calcula o cumprimento no fecho com a fórmula do Pacto pela Qualidade (indicador, grupo EFQM ponderado e total) e aplica as regras de repartição de incentivos do Plano de Qualidade e do Plano Diretor.",
+    "chk": "A IA não toca em nenhum número: todo o cálculo é feito pelo código com as regras do perfil e fica registado passo a passo para auditoria."
    },
    "revisia": {
-    "what": "Modo curso: rascunho do Relatório de Revisão de Resultados com os dados do ciclo. Modo serviço: revisão em lote dos relatórios entregues e da informação pública de cada curso.",
-    "chk": "Completude por secção do MP-18, coerência de cada número com os dados e cumprimento do plano anterior; lista de elementos obrigatórios do MP-07."
+    "what": "O ciclo anual do curso num só percurso: relatório de resultados, plano de melhoria SMART e acompanhamento do plano anterior. No modo serviço, revê em lote o que todos os cursos entregaram e devolve um relatório a cada um.",
+    "chk": "Completude segundo o modelo do perfil, coerência de cada número com os dados, e cada ação com objetivo, responsável, datas, indicador e meta."
    },
-   "mejoria": {
-    "what": "Gere planos de melhoria PDCA de cursos (MP-19) e de serviços: recolhe as áreas de melhoria das outras apps, reformula ações em formato SMART e acompanha o cumprimento e a eficácia.",
-    "chk": "Cada ação deve ter objetivo, responsável, datas, indicador e meta; avisos de início e vencimento; a IA nunca altera responsáveis nem datas."
-   },
-   "visitia": {
-    "what": "Calendário de renovações da acreditação, matriz de evidências por critério, simulação das audições da visita, rascunho de alegações e lista de verificação de auditoria interna.",
-    "chk": "Prazos de 6, 7 ou 8 anos conforme créditos, com alertas; lacunas de evidência por critério; cada alegação cita a sua evidência."
-   },
-   "buzonia": {
-    "what": "Classifica reclamações, sugestões e elogios, propõe a unidade responsável, redige a resposta na língua da entrada e produz o relatório de tendências.",
-    "chk": "Prazos e encaminhamento por regras em código; a resposta não pode prometer prazos nem ações que não constem dos compromissos da unidade."
-   },
-   "cartia": {
-    "what": "Redige ou revê uma Carta de Serviço em linguagem clara, transforma compromissos genéricos em mensuráveis, traduz para valenciano e inglês e avisa da revisão trienal.",
-    "chk": "Os 9 elementos mínimos, pelo menos um indicador com meta por compromisso e a vigência de 3 anos, verificados por código."
-   },
-   "normia": {
-    "what": "Assistente para responsáveis de qualidade e comissões sobre os procedimentos MP-01 a MP-24, os manuais MC-01 a MC-07 e a regulamentação, com controlo de versões de cada documento.",
-    "chk": "Cada resposta inclui citação literal, documento e secção, verificados por código; sem citação responde «não consta da documentação»."
+   "acreditia": {
+    "what": "App já publicada no catálogo, usada tal como está para a autoavaliação de renovação da acreditação do curso, carregando como evidências os relatórios e planos de melhoria do RevisIA.",
+    "chk": "Cada afirmação da autoavaliação apoia-se numa evidência carregada."
    },
    "equipia": {
-    "what": "Acompanha uma Equipa de Melhoria da proposta RC01 à ata final RC03: processo atual e proposto, alternativas com vantagens e desvantagens e custo-benefício quantificado.",
-    "chk": "De 3 a 10 membros e pelo menos 2 unidades; prazo de 1 ano para a ata com notificação automática; custo-benefício calculado com os números da equipa."
-   },
-   "comparia": {
-    "what": "Prepara uma ação de benchmarking: tipo, pedido completo, guião de perguntas para a visita, relatório de resultados com melhorias aplicáveis e Pecha Kucha de 20 diapositivos.",
-    "chk": "Pacote de pedido completo e requisitos (2 pessoas por unidade, instituição em Espanha); o relatório só inclui o que consta das notas da visita."
+    "what": "Acompanha as equipas de melhoria e de inovação da proposta (RC01) ao relatório final (RC03): processo atual e proposto, alternativas, custo-benefício, acompanhamento e notificações.",
+    "chk": "Requisitos da proposta e prazos segundo o perfil (na UMH, de 3 a 10 membros, pelo menos 2 unidades e ata final em 1 ano); custo-benefício com os números da equipa."
    },
    "innovia": {
-    "what": "Gere a carteira de propostas da Semana da Inovação: ficha normalizada, avaliação com rubrica, propostas semelhantes e acompanhamento até à implementação, com o Ticketing como caso.",
-    "chk": "A nota é calculada pelo código com pesos editáveis; a avaliação preliminar da IA cita a proposta e quem decide é o comité."
+    "what": "Gere a Semana da Inovação, as ações de benchmarking e as Jornadas MIB, e produz o relatório para a Gerência com os indicadores do painel do Plano Diretor: equipas, ações inovadoras implementadas e melhorias aplicadas.",
+    "chk": "A nota de cada proposta é calculada pelo código; as contagens para o painel saem das fichas carregadas, e o relatório só inclui o que nelas consta."
    },
    "excelencia": {
-    "what": "Autoavaliação com o Modelo EFQM 2025 (7 critérios, 29 subcritérios) usando como evidência os resultados das outras apps: pontos fortes, áreas de melhoria e relatório de autoavaliação.",
+    "what": "Autoavaliação com o Modelo EFQM 2025 (7 critérios, 29 subcritérios) usando como evidências os resultados das outras apps, incluindo as folhas de cumprimento do Pacto, já agrupadas por critérios EFQM.",
     "chk": "Matriz subcritério × evidência e pontuação RADAR com regras em código; sem evidência citada não há pontuação, e a nota é assinada pela equipa avaliadora."
    }
   },
-  "shared": "Cada participante trabalha com as exportações (anonimizadas) da sua unidade ou de um curso, e as apps encadeiam-se: as áreas de melhoria do RevisIA, ComentarIA, BuzonIA e ExcelencIA entram no MejorIA, e a autoavaliação do AcreditIA alimenta o VisitIA.",
+  "shared": "Cada participante trabalha com as exportações (anonimizadas) da sua unidade ou de um curso, e as apps encadeiam-se: as áreas de melhoria do EncuestIA, VozIA e ExcelencIA entram no RevisIA e EquipIA, e os indicadores do EquipIA e InnovIA alimentam o painel do CuadrIA.",
   "courseH": "O curso",
-  "courseLead": "Cinco sessões de 2 horas que seguem o ciclo de qualidade. A partir da segunda sessão trabalham-se três apps sobre os dados de cada participante (cerca de 30 minutos por app) e sai-se com um resultado real.",
+  "courseLead": "Cinco sessões de 2 horas. A partir da segunda, cada sessão trabalha um dos quatro grandes processos do serviço com as suas duas apps (cerca de 45 minutos por app), sobre os dados de cada participante, e sai-se com um resultado real.",
   "thSes": "Sessão",
   "thOut": "Resultado",
   "slides": "Ver a apresentação",
   "sessions": [
    {
-    "t": "Fornecedores, modelos e a tua chave de IA",
-    "a": "Apresentação, guia da chave e quadro de processos",
-    "o": "Chave configurada com limite de gasto, modelo escolhido e ficha da unidade: processos que gere, exportações disponíveis e os três processos do quadro que mais tempo lhe custam."
+    "t": "Fornecedores, modelos, a tua chave e o perfil do serviço",
+    "a": "Apresentação, guia da chave e perfil do serviço",
+    "o": "Chave configurada com limite de gasto, modelo escolhido e perfil do serviço criado: agência, unidades, indicadores, modelos e exportações disponíveis."
    },
    {
-    "t": "Medir",
-    "a": "CuadrIA · EncuestIA · ComentarIA",
-    "o": "Painel de uma unidade ou curso, lote de relatórios de inquéritos e mapa de temas dos comentários abertos."
+    "t": "Voz do cliente",
+    "a": "EncuestIA · VozIA",
+    "o": "Uma campanha de inquérito preparada com os seus relatórios em lote, e um lote de entradas respondido com uma carta de serviço revista."
    },
    {
-    "t": "Assegurar os cursos",
-    "a": "RevisIA · MejorIA · VisitIA",
-    "o": "Relatório de resultados de teste revisto, plano de melhoria SMART com acompanhamento e dossier de preparação de uma visita."
+    "t": "Tratamento de dados",
+    "a": "CuadrIA · IncentivIA",
+    "o": "O painel de uma unidade com o seu relatório, e a folha de cumprimento do seu pacto calculada e verificada."
    },
    {
-    "t": "Ouvir e comprometer-se",
-    "a": "BuzonIA · CartIA · NormIA",
-    "o": "Lote de entradas classificado e respondido, uma Carta de Serviço revista e o assistente do sistema testado com perguntas reais."
+    "t": "Acreditação / garantia interna",
+    "a": "RevisIA · AcreditIA",
+    "o": "O relatório de resultados de um curso com o plano de melhoria e o acompanhamento, e o rascunho da autoavaliação de renovação."
    },
    {
-    "t": "Melhorar e inovar",
-    "a": "EquipIA · ComparIA · InnovIA",
-    "o": "Proposta RC01 validada com o mapa do processo, pedido de benchmarking completo e uma proposta de inovação avaliada."
+    "t": "Gestão / Melhoria",
+    "a": "EquipIA · InnovIA",
+    "o": "O relatório final de uma equipa de melhoria e o relatório das Jornadas MIB para a Gerência, com os indicadores para o painel."
    }
   ],
   "keyH": "A tua chave de IA",
@@ -1330,9 +1420,9 @@ const T = {
   "rulesLead": "Aplicam-se em todas as sessões e em todas as apps.",
   "privH": "Proteção de dados",
   "priv": [
-   "Apenas exportações anonimizadas: nunca nomes, números de identificação, emails ou telefones de estudantes ou pessoal.",
-   "Os comentários abertos e as entradas são anonimizados antes de enviar: podem identificar pessoas mesmo sem nome.",
-   "Os resultados de inquéritos por docente são dados pessoais: usa dados fictícios ou agregados no curso.",
+   "Apenas exportações anonimizadas: nunca nomes, números de identificação, emails ou telefones de estudantes ou pessoal, exceto no módulo de envio, que não sai do navegador.",
+   "Os comentários abertos e as entradas são anonimizados antes de serem enviados à IA: podem identificar pessoas mesmo sem nome.",
+   "Os resultados de inquéritos por docente e os incentivos por unidade são sensíveis: no curso, usa dados fictícios ou agregados.",
    "Usa documentos que tenhas direito a usar; o texto oficial do Modelo EFQM tem direitos de autor.",
    "Cada participante usa a sua própria chave, guardada apenas no seu navegador."
   ],
@@ -1340,9 +1430,9 @@ const T = {
   "eth": [
    "Revê tudo o que a IA propõe antes de o usar: a responsabilidade é de quem assina.",
    "A IA não decide: a comissão ratifica, a gerência aprova e a unidade responde.",
-   "Nenhum número entra sem suporte: as apps assinalam os que não estão nos dados.",
+   "Nenhum número entra sem suporte, e os incentivos são calculados apenas pelo código.",
    "Informa quando um relatório ou resposta foi preparado com ajuda de IA.",
-   "As simulações (visita do painel, pontuação EFQM) orientam, mas não preveem a avaliação real."
+   "As simulações e pontuações (EFQM, avaliação de propostas) orientam, mas não substituem a avaliação."
   ],
   "footOrg": "Curso «Qualidade Universitária com IA» · baseado nos processos publicados em calidad.umh.es",
   "footDev": "Desenvolvimento:",
@@ -1365,7 +1455,39 @@ const T = {
    "Processa lotes completos e entrega documentos em Word, Excel e PDF.",
    "Por API os dados não são usados para treino por defeito, e a chave fica guardada apenas no teu navegador."
   ],
-  "vsNote": "São complementares: o chatbot serve para explorar; as apps com chave, para produzir resultados verificáveis em lote. A subscrição do chatbot não inclui o uso da API, que é faturado à parte."
+  "vsNote": "São complementares: o chatbot serve para explorar; as apps com chave, para produzir resultados verificáveis em lote. A subscrição do chatbot não inclui o uso da API, que é faturado à parte.",
+  "navKit": "Kit comum",
+  "potNone": "Por definir",
+  "kitChip": "Kit comum",
+  "existing": "Existente",
+  "kitH": "Kit comum",
+  "kitLead": "Seis componentes que todas as apps levam da mesma forma. São o que permite que qualquer serviço de qualidade, de qualquer universidade, use as mesmas apps.",
+  "kit": [
+   [
+    "Perfil do serviço",
+    "Um ficheiro JSON, criado na sessão 1, com a universidade, o país e a língua, a agência e os seus critérios, as unidades e cursos, os indicadores com meta, as regras de repartição, os modelos e o calendário."
+   ],
+   [
+    "Mapeamento de colunas",
+    "Associa as colunas de qualquer exportação (o sistema da UMH ou outra plataforma) aos campos que cada app espera, e guarda-o no perfil."
+   ],
+   [
+    "Anonimizador",
+    "Oculta nomes, emails, números de identificação e telefones antes de enviar algo à IA, com pré-visualização do que sai."
+   ],
+   [
+    "Verificador",
+    "Cruza cada número do texto com a tabela de origem e cada citação com o seu documento, e assinala o que não coincide."
+   ],
+   [
+    "Envio",
+    "Um email personalizado por destinatário, com o seu anexo, num ZIP de ficheiros .eml prontos a enviar e um CSV de controlo."
+   ],
+   [
+    "Intercâmbio entre apps",
+    "Ficheiros JSON com formato comum para as áreas de melhoria e os indicadores de gestão que passam de uma app para outra."
+   ]
+  ]
  }
 };
 
@@ -1386,6 +1508,7 @@ function link(id, cls, inner, title){
     : `<span class="${cls}"${t}>${inner}</span>`;
 }
 function mini(id, L){
+  if (id === "KIT") return `<a class="mini kit" href="#kit">${esc(L.kitChip)}</a>`;
   const a = APPS.find(x => x.id === id);
   const soon = a && !isBuilt(id) ? ` · ${L.soon}` : "";
   if (!a) return link(id, "mini comp", esc(COMP[id]), L.short[id]);
@@ -1409,7 +1532,7 @@ function render(){
     const [grp, pot, apps] = p, P = L.procs[i];
     if (grp !== g) { g = grp; rows += `<tr class="grp"><td colspan="8">${esc(L.groups[g])}</td></tr>`; }
     rows += `<tr><td class="num">${i+1}</td><td class="proc">${esc(P[0])}</td><td>${esc(P[1])}</td><td>${esc(P[2])}</td><td>${esc(P[3])}</td><td>${esc(P[4])}</td>
-      <td><span class="pot ${pot}">${esc(pot === "h" ? L.potHigh : L.potMed)}</span></td><td>${apps.map(id => mini(id, L)).join("")}</td></tr>`;
+      <td><span class="pot ${pot}">${esc(pot === "h" ? L.potHigh : pot === "m" ? L.potMed : L.potNone)}</span></td><td>${apps.length ? apps.map(id => mini(id, L)).join("") : "—"}</td></tr>`;
   });
   document.getElementById("board").innerHTML = rows + "</tbody>";
 
@@ -1430,7 +1553,7 @@ function render(){
       ? `<a class="btn" href="${url(a.id)}" target="_blank" rel="noopener"><i class="ti ti-external-link"></i> ${esc(L.open)}</a>`
       : `<span class="soon"><i class="ti ti-hammer"></i> ${esc(L.soon)}</span>`;
     return `<article class="card${a.ses === 0 ? " optcard" : ""}">
-      <div class="card-h"><div class="icon-box"><i class="ti ${a.icon}"></i></div><h4>${a.name}</h4></div>
+      <div class="card-h"><div class="icon-box"><i class="ti ${a.icon}"></i></div><h4>${a.name}</h4>${a.existing ? `<span class="exist">${esc(L.existing)}</span>` : ""}</div>
       <p>${esc(A.what)}</p>
       <div class="chk"><b>${esc(L.checks)}</b>${esc(A.chk)}</div>
       <div class="foot"><span class="procs">${esc(L.procLbl)}: ${a.procs.join(", ")}</span>${btn}</div>
@@ -1448,6 +1571,7 @@ function render(){
       <div class="hide-sm">${esc(s.o)}</div>
     </div>`).join("");
 
+  document.getElementById("kitGrid").innerHTML = L.kit.map(k => `<article class="card kitcard"><div class="card-h"><div class="icon-box"><i class="ti ti-puzzle"></i></div><h4>${esc(k[0])}</h4></div><p>${esc(k[1])}</p></article>`).join("");
   const list = (id, arr) => { document.getElementById(id).innerHTML = arr.map(x => `<li>${esc(x)}</li>`).join(""); };
   list("chatL", L.chat); list("apiL", L.api); list("keySteps", L.keySteps); list("keyChoose", L.keyChoose); list("priv", L.priv); list("eth", L.eth);
 }
